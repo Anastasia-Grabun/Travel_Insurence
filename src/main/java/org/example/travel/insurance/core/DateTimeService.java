@@ -1,14 +1,15 @@
 package org.example.travel.insurance.core;
 
-import org.example.travel.insurance.rest.TravelCalculatePremiumRequest;
-import java.math.BigDecimal;
+import org.springframework.stereotype.Service;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import static java.math.BigDecimal.valueOf;
-
+@Service
 class DateTimeService {
-    long calculateDurationInDays(TravelCalculatePremiumRequest request){
-        long differenceInMilliseconds = request.getAgreementDateTo().getTime() - request.getAgreementDateFrom().getTime();
+
+    long calculateDurationInDays(Date date1, Date date2){
+        long differenceInMilliseconds = date2.getTime() - date1.getTime();
         return TimeUnit.DAYS.convert(differenceInMilliseconds, TimeUnit.MILLISECONDS);
     }
+
 }
