@@ -1,22 +1,21 @@
 package org.example.travel.insurance.core;
 
-import org.example.travel.insurance.rest.TravelCalculatePremiumRequest;
 import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class DateTimeServiceTest {
+class DateTimeServiceTest {
+
     private DateTimeService dateTimeService = new DateTimeService();
-    private TravelCalculatePremiumRequest request = new TravelCalculatePremiumRequest();
 
     @Test
     public void shouldDurationInDaysPositive(){
-        request.setAgreementDateFrom(new Date());
-        request.setAgreementDateTo(new Date());
+        Date dateFrom = new Date();
+        Date dateTo = new Date();
 
-        var date = dateTimeService.calculateDurationInDays(request);
+        var date = dateTimeService.calculateDurationInDays(dateFrom, dateTo);
 
         assertNotNull(date);
     }
@@ -26,10 +25,7 @@ public class DateTimeServiceTest {
         Date dateFrom = convertToDate("2025-12-01");
         Date dateTo = convertToDate("2023-12-01");
 
-        request.setAgreementDateFrom(dateFrom);
-        request.setAgreementDateTo(dateTo);
-
-        var date = dateTimeService.calculateDurationInDays(request);
+        var date = dateTimeService.calculateDurationInDays(dateFrom, dateTo);
 
         assertNotNull(date);
     }
@@ -39,10 +35,7 @@ public class DateTimeServiceTest {
         Date dateFrom = convertToDate("2025-12-01");
         Date dateTo = convertToDate("2025-12-01");
 
-        request.setAgreementDateFrom(dateFrom);
-        request.setAgreementDateTo(dateTo);
-
-        var date = dateTimeService.calculateDurationInDays(request);
+        var date = dateTimeService.calculateDurationInDays(dateFrom, dateTo);
 
         assertNotNull(date);
     }

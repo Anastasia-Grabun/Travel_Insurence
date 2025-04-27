@@ -1,31 +1,42 @@
 package org.example.travel.insurance.core;
 
-import org.springframework.stereotype.Component;
-import org.example.travel.insurance.rest.TravelCalculatePremiumRequest;
-import org.example.travel.insurance.rest.TravelCalculatePremiumResponse;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
+import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
+import org.example.travel.insurance.dto.ValidationError;
+import org.springframework.stereotype.Service;
+import java.util.List;
 
-import java.math.BigDecimal;
-
-import static java.math.BigDecimal.valueOf;
-
-@Component
+@Service
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService {
+
+    private final TravelPremiumUnderwriting travelPremiumUnderwriting;
+    private final TravelCalculatePremiumRequestValidator requestValidator;
 
     @Override
     public TravelCalculatePremiumResponse calculatePremium(TravelCalculatePremiumRequest request) {
+        List<ValidationError> errors = requestValidator.validate(request);
+        return errors.isEmpty() ? buildResponse(request) : buildResponse(errors);
+    }
+
+    private TravelCalculatePremiumResponse buildResponse(TravelCalculatePremiumRequest request){
         TravelCalculatePremiumResponse response = new TravelCalculatePremiumResponse();
+
         response.setPersonFirstName(request.getPersonFirstName());
         response.setPersonLastName(request.getPersonLastName());
         response.setAgreementDateFrom(request.getAgreementDateFrom());
         response.setAgreementDateTo(request.getAgreementDateTo());
-        response.setAgreementPrice(calculateDurationInDays(request));
+
+        var duration = travelPremiumUnderwriting.calculatePremium(request);
+        response.setAgreementPrice(duration);
 
         return response;
     }
 
-    private BigDecimal calculateDurationInDays(TravelCalculatePremiumRequest request){
-        long differenceInMilliseconds = request.getAgreementDateTo().getTime() - request.getAgreementDateFrom().getTime();
-        return valueOf(differenceInMilliseconds / (1000 * 60 * 60 * 24));
+    private TravelCalculatePremiumResponse buildResponse(List<ValidationError> errors){
+        return new TravelCalculatePremiumResponse(errors);
     }
 
 }
