@@ -2,6 +2,7 @@ package org.example.travel.insurance.core;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
 import org.example.travel.insurance.dto.ValidationError;
