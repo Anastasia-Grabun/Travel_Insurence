@@ -1,5 +1,6 @@
 package org.example.travel.insurance.core;
 
+import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
