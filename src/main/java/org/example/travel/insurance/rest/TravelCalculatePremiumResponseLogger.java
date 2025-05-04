@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 class TravelCalculatePremiumResponseLogger {
 
-    private static final Logger logger = LogManager.getLogger(TravelCalculatePremiumRequestLogger.class);
+    private static final Logger logger = LogManager.getLogger(TravelCalculatePremiumResponseLogger.class);
 
     void toLogJson(TravelCalculatePremiumResponse response){
         try {
