@@ -15,7 +15,7 @@ public class DateTimeService {
     }
 
     public Date getCurrentDateTime() {
-        ZoneId zone = ZoneId.of("Europe/Grodno");
+        ZoneId zone = ZoneId.of("Europe/Riga");
         ZonedDateTime zonedDateTime = ZonedDateTime.now(zone);
         return Date.from(zonedDateTime.toInstant());
     }
