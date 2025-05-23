@@ -1,6 +1,5 @@
 package org.example.travel.insurance.rest;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,9 +10,9 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static uk.org.webcompere.modelassert.json.JsonAssertions.assertJson;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -67,6 +66,22 @@ public class TravelCalculatePremiumControllerTest {
     }
 
     @Test
+    public void selectedRisksAreNull() throws Exception {
+        compareRequestResponse(
+                "rest/TravelCalculatePremiumRequest_selected_risks_null.json",
+                "rest/TravelCalculatePremiumResponse_selected_risks_null.json"
+        );
+    }
+
+    @Test
+    public void selectedRisksAreEmpty() throws Exception {
+        compareRequestResponse(
+                "rest/TravelCalculatePremiumRequest_selected_risks_empty.json",
+                "rest/TravelCalculatePremiumResponse_selected_risks_empty.json"
+        );
+    }
+
+    @Test
     public void allFieldsNotProvided() throws Exception {
         compareRequestResponse(
                 "rest/TravelCalculatePremiumRequest_allFields_not_provided.json",
@@ -94,8 +109,9 @@ public class TravelCalculatePremiumControllerTest {
 
         String jsonResponse = jsonFileReader.readJsonFromFile(jsonResponseFilePath);
 
-        ObjectMapper mapper = new ObjectMapper();
-        assertEquals(mapper.readTree(responseBodyContent), mapper.readTree(jsonResponse));
+        assertJson(responseBodyContent)
+                .where().arrayInAnyOrder()
+                .isEqualTo(jsonResponse);
     }
 
 }
