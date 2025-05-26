@@ -1,8 +1,8 @@
 {
   "errors": [
     {
-      "field": "Selected_risks",
-      "message": "Must not be empty!"
+      "field": "ERROR_CODE_8",
+      "message": "Array Selected_risks must not be empty!"
     }
   ],
   "personFirstName": null,

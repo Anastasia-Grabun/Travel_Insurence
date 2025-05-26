@@ -1,6 +1,7 @@
 package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.core.DateTimeService;
+import org.example.travel.insurance.core.ErrorMessageProvider;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,9 @@ import static org.mockito.Mockito.when;
 class AgreementDateFromNotInPastTravelRequestValidationTest {
 
     @Mock
+    private ValidationErrorFactory errorFactory;
+
+    @Mock
     private DateTimeService dataTimeService;
 
     @InjectMocks
@@ -32,12 +36,14 @@ class AgreementDateFromNotInPastTravelRequestValidationTest {
 
         when(request.getAgreementDateFrom()).thenReturn(parseDate("20.12.2005"));
         when(dataTimeService.getCurrentDateTime()).thenReturn(parseDate("20.10.2025"));
+        when(errorFactory.buildError("ERROR_CODE_5"))
+                .thenReturn(new ValidationError("ERROR_CODE_5", "Field agreementDateFrom must not be in the past!"));
 
         Optional<ValidationError> errors = validation.execute(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getField(), "agreementDateFrom");
-        assertEquals(errors.get().getMessage(),      "AgreementDateFrom must not be in the past!");
+        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_5");
+        assertEquals(errors.get().getDescription(),      "Field agreementDateFrom must not be in the past!");
     }
 
     @Test
