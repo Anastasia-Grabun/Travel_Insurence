@@ -112,8 +112,8 @@ class TravelCalculatePremiumServiceImplTest {
         when(requestValidator.validate(request)).thenReturn(List.of(validationError));
         var response = service.calculatePremium(request);
 
-        Assertions.assertEquals(response.getErrors().getFirst().getField(), "field");
-        Assertions.assertEquals(response.getErrors().getFirst().getMessage(), "message");
+        Assertions.assertEquals(response.getErrors().getFirst().getErrorCode(), "field");
+        Assertions.assertEquals(response.getErrors().getFirst().getDescription(), "message");
         Assertions.assertNull(response.getPersonFirstName());
     }
 

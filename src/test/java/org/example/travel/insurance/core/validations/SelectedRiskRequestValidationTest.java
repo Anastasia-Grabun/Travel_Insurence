@@ -2,16 +2,27 @@ package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Collections;
 import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class SelectedRiskRequestValidationTest {
 
-    private SelectedRisksValidation validation = new SelectedRisksValidation();
+    @Mock
+    private ValidationErrorFactory errorFactory;
+
+    @InjectMocks
+    private SelectedRisksValidation validation;
 
 
     @Test
@@ -22,7 +33,7 @@ public class SelectedRiskRequestValidationTest {
 
         Optional<ValidationError> errors = validation.execute(request);
 
-        Assertions.assertFalse(errors.isPresent());
+        assertFalse(errors.isPresent());
     }
 
     @Test
@@ -30,12 +41,14 @@ public class SelectedRiskRequestValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getSelected_risks()).thenReturn(null);
+        when(errorFactory.buildError("ERROR_CODE_8"))
+                .thenReturn(new ValidationError("ERROR_CODE_8", "Array Selected_risks must not be empty!"));
 
         Optional<ValidationError> errors = validation.execute(request);
 
-        Assertions.assertFalse(errors.isEmpty());
-        Assertions.assertEquals(errors.get().getField(), "Selected_risks");
-        Assertions.assertEquals(errors.get().getMessage(),"Must not be empty!");
+        assertFalse(errors.isEmpty());
+        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_8");
+        assertEquals(errors.get().getDescription(),"Array Selected_risks must not be empty!");
     }
 
     @Test
@@ -43,11 +56,14 @@ public class SelectedRiskRequestValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getSelected_risks()).thenReturn(Collections.EMPTY_LIST);
+        when(errorFactory.buildError("ERROR_CODE_8"))
+                .thenReturn(new ValidationError("ERROR_CODE_8", "Array Selected_risks must not be empty!"));
 
         Optional<ValidationError> errors = validation.execute(request);
 
-        Assertions.assertTrue(errors.isPresent());
-        Assertions.assertEquals(errors.get().getField(), "Selected_risks");
-        Assertions.assertEquals(errors.get().getMessage(), "Must not be empty!");
+        assertTrue(errors.isPresent());
+        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_8");
+        assertEquals(errors.get().getDescription(),"Array Selected_risks must not be empty!");
     }
+
 }

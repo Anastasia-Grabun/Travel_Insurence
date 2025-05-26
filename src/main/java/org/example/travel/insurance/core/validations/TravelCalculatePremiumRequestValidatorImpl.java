@@ -16,9 +16,6 @@ class TravelCalculatePremiumRequestValidatorImpl implements TravelCalculatePremi
     private final List<TravelRequestValidation> travelValidations;
 
     public List<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        if (request == null) {
-            return List.of(new ValidationError("request", "Request must not be null!"));
-        }
 
         return travelValidations.stream()
                 .map(validation -> validation.execute(request))

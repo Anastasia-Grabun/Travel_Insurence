@@ -2,15 +2,26 @@ package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.Optional;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class PersonLastNameTravelRequestValidationTest {
 
-    private PersonLastNameValidation validation = new PersonLastNameValidation();
+    @Mock
+    private ValidationErrorFactory errorFactory;
+
+    @InjectMocks
+    private PersonLastNameValidation validation;
 
     @Test
     public void shouldNotReturnErrorWhenPersonLastNameIs(){
@@ -20,7 +31,7 @@ public class PersonLastNameTravelRequestValidationTest {
 
         Optional<ValidationError> errors = validation.execute(request);
 
-        Assertions.assertFalse(errors.isPresent());
+        assertFalse(errors.isPresent());
     }
 
     @Test
@@ -28,12 +39,14 @@ public class PersonLastNameTravelRequestValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getPersonLastName()).thenReturn(null);
+        when(errorFactory.buildError("ERROR_CODE_2"))
+                .thenReturn(new ValidationError("ERROR_CODE_2", "Field personLastName is empty!"));
 
         Optional<ValidationError> errors = validation.execute(request);
 
-        Assertions.assertFalse(errors.isEmpty());
-        Assertions.assertEquals(errors.get().getField(), "personLastName");
-        Assertions.assertEquals(errors.get().getMessage(),      "Must not be empty!");
+        assertFalse(errors.isEmpty());
+        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_2");
+        assertEquals(errors.get().getDescription(), "Field personLastName is empty!");
     }
 
     @Test
@@ -41,12 +54,14 @@ public class PersonLastNameTravelRequestValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getPersonLastName()).thenReturn("");
+        when(errorFactory.buildError("ERROR_CODE_2"))
+                .thenReturn(new ValidationError("ERROR_CODE_2", "Field personLastName is empty!"));
 
         Optional<ValidationError> errors = validation.execute(request);
 
-        Assertions.assertTrue(errors.isPresent());
-        Assertions.assertEquals(errors.get().getField(), "personLastName");
-        Assertions.assertEquals(errors.get().getMessage(), "Must not be empty!");
+        assertTrue(errors.isPresent());
+        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_2");
+        assertEquals(errors.get().getDescription(), "Field personLastName is empty!");
     }
 
 }
