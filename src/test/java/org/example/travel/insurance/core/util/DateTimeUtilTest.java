@@ -1,21 +1,22 @@
-package org.example.travel.insurance.core;
+package org.example.travel.insurance.core.util;
 
+import org.example.travel.insurance.core.util.DateTimeUtil;
 import org.junit.jupiter.api.Test;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class DateTimeServiceTest {
+class DateTimeUtilTest {
 
-    private DateTimeService dateTimeService = new DateTimeService();
+    private DateTimeUtil dateTimeUtil = new DateTimeUtil();
 
     @Test
     public void shouldDurationInDaysPositive(){
         Date dateFrom = new Date();
         Date dateTo = new Date();
 
-        var date = dateTimeService.calculateDurationInDays(dateFrom, dateTo);
+        var date = dateTimeUtil.calculateDurationInDays(dateFrom, dateTo);
 
         assertNotNull(date);
     }
@@ -25,7 +26,7 @@ class DateTimeServiceTest {
         Date dateFrom = convertToDate("2025-12-01");
         Date dateTo = convertToDate("2023-12-01");
 
-        var date = dateTimeService.calculateDurationInDays(dateFrom, dateTo);
+        var date = dateTimeUtil.calculateDurationInDays(dateFrom, dateTo);
 
         assertNotNull(date);
     }
@@ -35,7 +36,7 @@ class DateTimeServiceTest {
         Date dateFrom = convertToDate("2025-12-01");
         Date dateTo = convertToDate("2025-12-01");
 
-        var date = dateTimeService.calculateDurationInDays(dateFrom, dateTo);
+        var date = dateTimeUtil.calculateDurationInDays(dateFrom, dateTo);
 
         assertNotNull(date);
     }

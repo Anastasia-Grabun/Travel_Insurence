@@ -1,6 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
-import org.example.travel.insurance.core.DateTimeService;
+import org.example.travel.insurance.core.util.DateTimeUtil;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
@@ -24,7 +24,7 @@ public class AgreementDateToNotInPastTravelRequestValidationTest {
     private ValidationErrorFactory errorFactory;
 
     @Mock
-    private DateTimeService dataTimeService;
+    private DateTimeUtil dataTimeService;
 
     @InjectMocks
     private AgreementDateToNotInPastValidation validation;

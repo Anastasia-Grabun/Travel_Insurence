@@ -1,7 +1,9 @@
-package org.example.travel.insurance.core;
+package org.example.travel.insurance.core.services;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.example.travel.insurance.core.services.TravelCalculatePremiumService;
+import org.example.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
 import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
@@ -13,7 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService {
 
-    private final TravelPremiumUnderwriting travelPremiumUnderwriting;
+    private final TravelPremiumUnderwriting travelPremiumUnderwritingImpl;
     private final TravelCalculatePremiumRequestValidator requestValidator;
 
     @Override
@@ -30,7 +32,7 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
         response.setAgreementDateFrom(request.getAgreementDateFrom());
         response.setAgreementDateTo(request.getAgreementDateTo());
 
-        var duration = travelPremiumUnderwriting.calculatePremium(request);
+        var duration = travelPremiumUnderwritingImpl.calculatePremium(request);
         response.setAgreementPrice(duration);
 
         return response;

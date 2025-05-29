@@ -1,5 +1,6 @@
-package org.example.travel.insurance.core;
+package org.example.travel.insurance.core.services;
 
+import org.example.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
 import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 class TravelCalculatePremiumServiceImplTest {
 
     @Mock
-    private TravelPremiumUnderwriting travelPremiumUnderwriting;
+    private TravelPremiumUnderwriting travelPremiumUnderwritingImpl;
 
     @Mock
     private TravelCalculatePremiumRequestValidator requestValidator;
@@ -31,7 +32,7 @@ class TravelCalculatePremiumServiceImplTest {
     public void shouldPopulateResponseWithCorrectFirstName() {
         var request = createRequestWithAllFields();
 
-        when(travelPremiumUnderwriting.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
+        when(travelPremiumUnderwritingImpl.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
         when(requestValidator.validate(request)).thenReturn(List.of());
 
         var actual = service.calculatePremium(request);
@@ -42,7 +43,7 @@ class TravelCalculatePremiumServiceImplTest {
     public void shouldPopulateResponseWithCorrectLastName(){
         var request = createRequestWithAllFields();
 
-        when(travelPremiumUnderwriting.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
+        when(travelPremiumUnderwritingImpl.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
         when(requestValidator.validate(request)).thenReturn(List.of());
 
         var actual = service.calculatePremium(request);
@@ -53,7 +54,7 @@ class TravelCalculatePremiumServiceImplTest {
     public void shouldPopulateResponseWithCorrectAgreementDateFrom(){
         var request = createRequestWithAllFields();
 
-        when(travelPremiumUnderwriting.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
+        when(travelPremiumUnderwritingImpl.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
         when(requestValidator.validate(request)).thenReturn(List.of());
 
         var actual = service.calculatePremium(request);
@@ -64,7 +65,7 @@ class TravelCalculatePremiumServiceImplTest {
     public void shouldPopulateResponseWithCorrectAgreementDateTo(){
         var request = createRequestWithAllFields();
 
-        when(travelPremiumUnderwriting.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
+        when(travelPremiumUnderwritingImpl.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
         when(requestValidator.validate(request)).thenReturn(List.of());
 
         var actual = service.calculatePremium(request);
@@ -75,7 +76,7 @@ class TravelCalculatePremiumServiceImplTest {
     public void shouldPopulateResponseWithCorrectAgreementPrice(){
         var request = createRequestWithAllFields();
 
-        when(travelPremiumUnderwriting.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
+        when(travelPremiumUnderwritingImpl.calculatePremium(request)).thenReturn(BigDecimal.valueOf(0L));
         when(requestValidator.validate(request)).thenReturn(List.of());
         var actual = service.calculatePremium(request);
 
@@ -140,7 +141,7 @@ class TravelCalculatePremiumServiceImplTest {
         when(requestValidator.validate(request)).thenReturn(List.of(validationError));
         service.calculatePremium(request);
 
-        verifyNoInteractions(travelPremiumUnderwriting);
+        verifyNoInteractions(travelPremiumUnderwritingImpl);
     }
 
     private TravelCalculatePremiumRequest createRequestWithAllFields() {

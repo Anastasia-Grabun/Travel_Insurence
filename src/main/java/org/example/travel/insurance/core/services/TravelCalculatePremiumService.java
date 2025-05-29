@@ -1,4 +1,4 @@
-package org.example.travel.insurance.core;
+package org.example.travel.insurance.core.services;
 
 
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
