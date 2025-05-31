@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
@@ -31,7 +32,17 @@ public class ErrorCodeUtil {
     }
 
     public String getDescription(String errorCode) {
-        return errorMessages.getOrDefault(errorCode, "Unknown error");
+        return errorMessages.get(errorCode);
+    }
+
+    public String getErrorDescription(String errorCode, List<Placeholder> placeholders){
+        String errorDescription = errorMessages.get(errorCode);
+        for(Placeholder placeholder : placeholders){
+            String replacePlaceholder = "{" + placeholder.getPlaceholderName() + "}";
+            errorDescription = errorDescription.replace(replacePlaceholder, placeholder.getPlaceholderValue());
+        }
+
+        return errorDescription;
     }
 
 }
