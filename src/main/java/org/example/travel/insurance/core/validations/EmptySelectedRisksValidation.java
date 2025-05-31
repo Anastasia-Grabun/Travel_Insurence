@@ -8,7 +8,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class SelectedRisksValidation implements TravelRequestValidation{
+public class EmptySelectedRisksValidation implements TravelRequestValidation{
 
     private final ValidationErrorFactory errorFactory;
 
