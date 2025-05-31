@@ -3,7 +3,7 @@ package org.example.travel.insurance.rest;
 import com.google.common.base.Stopwatch;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.core.TravelCalculatePremiumService;
+import org.example.travel.insurance.core.services.TravelCalculatePremiumService;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
 import org.springframework.web.bind.annotation.PostMapping;

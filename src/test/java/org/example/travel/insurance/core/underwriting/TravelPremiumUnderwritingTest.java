@@ -1,5 +1,6 @@
-package org.example.travel.insurance.core;
+package org.example.travel.insurance.core.underwriting;
 
+import org.example.travel.insurance.core.util.DateTimeUtil;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,10 +19,10 @@ import static org.mockito.Mockito.when;
 public class TravelPremiumUnderwritingTest {
 
     @Mock
-    private DateTimeService dateTimeService;
+    private DateTimeUtil dateTimeUtil;
 
     @InjectMocks
-    private TravelPremiumUnderwriting travelPremiumUnderwriting;
+    private TravelPremiumUnderwritingImpl travelPremiumUnderwritingImpl;
 
     @Test
     public void shouldReturnResponseWithCorrectAgreementPrice() {
@@ -29,8 +30,8 @@ public class TravelPremiumUnderwritingTest {
 
         when(request.getAgreementDateFrom()).thenReturn(parseDate("01.01.2024"));
         when(request.getAgreementDateTo()).thenReturn(parseDate("10.01.2024"));
-        when(dateTimeService.calculateDurationInDays(request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(9L);
-        BigDecimal premium = travelPremiumUnderwriting.calculatePremium(request);
+        when(dateTimeUtil.calculateDurationInDays(request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(9L);
+        BigDecimal premium = travelPremiumUnderwritingImpl.calculatePremium(request);
 
         assertEquals(premium, new BigDecimal(9));
     }

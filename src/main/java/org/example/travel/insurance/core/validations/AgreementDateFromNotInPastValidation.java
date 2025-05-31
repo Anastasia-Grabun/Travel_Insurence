@@ -2,7 +2,7 @@ package org.example.travel.insurance.core.validations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.core.DateTimeService;
+import org.example.travel.insurance.core.util.DateTimeUtil;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class AgreementDateFromNotInPastValidation implements TravelRequestValidation {
 
-    private final DateTimeService dataTimeService;
+    private final DateTimeUtil dataTimeService;
     private final ValidationErrorFactory errorFactory;
 
     public Optional<ValidationError> execute(TravelCalculatePremiumRequest request){

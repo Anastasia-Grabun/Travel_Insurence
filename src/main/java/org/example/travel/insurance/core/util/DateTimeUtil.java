@@ -1,4 +1,4 @@
-package org.example.travel.insurance.core;
+package org.example.travel.insurance.core.util;
 
 import org.springframework.stereotype.Service;
 import java.time.ZoneId;
@@ -7,7 +7,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class DateTimeService {
+public class DateTimeUtil {
 
     public long calculateDurationInDays(Date date1, Date date2){
         long differenceInMilliseconds = date2.getTime() - date1.getTime();
