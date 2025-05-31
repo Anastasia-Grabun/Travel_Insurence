@@ -28,7 +28,7 @@ public class ClassifierValue {
 
     @ManyToOne
     @JoinColumn(name = "classifier_id", nullable = false)
-    private Classifier classifier_id;
+    private Classifier classifier;
 
     @Column(name = "ic", nullable = false)
     private String ic;
