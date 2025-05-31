@@ -13,12 +13,12 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class AgreementDateFromNotInPastValidation implements TravelRequestValidation {
 
-    private final DateTimeUtil dataTimeService;
+    private final DateTimeUtil dateTimeUtil;
     private final ValidationErrorFactory errorFactory;
 
-    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request){
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request){
         Date dateFrom = request.getAgreementDateFrom();
-        Date currentDate = dataTimeService.getCurrentDateTime();
+        Date currentDate = dateTimeUtil.getCurrentDateTime();
 
         return (dateFrom != null && dateFrom.before(currentDate))
                 ? Optional.of(errorFactory.buildError("ERROR_CODE_5"))

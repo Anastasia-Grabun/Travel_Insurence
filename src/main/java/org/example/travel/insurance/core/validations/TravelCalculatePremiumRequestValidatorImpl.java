@@ -6,7 +6,6 @@ import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -18,9 +17,7 @@ class TravelCalculatePremiumRequestValidatorImpl implements TravelCalculatePremi
     public List<ValidationError> validate(TravelCalculatePremiumRequest request) {
 
         return travelValidations.stream()
-                .map(validation -> validation.execute(request))
-                .filter(Optional::isPresent)
-                .map(Optional::get)
+                .flatMap(validation -> validation.validate(request).stream())
                 .collect(Collectors.toList());
     }
 

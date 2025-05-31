@@ -16,7 +16,7 @@ class AgreementDateToNotInPastValidation implements TravelRequestValidation {
     private final DateTimeUtil dateTimeUtil;
     private final ValidationErrorFactory errorFactory;
 
-    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request){
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request){
         Date dateTo = request.getAgreementDateTo();
         Date currentDate = dateTimeUtil.getCurrentDateTime();
 

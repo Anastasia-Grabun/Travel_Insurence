@@ -6,5 +6,6 @@ import java.util.Optional;
 
 interface TravelRequestValidation {
 
-    Optional<ValidationError> execute(TravelCalculatePremiumRequest request);
+    Optional<ValidationError> validate(TravelCalculatePremiumRequest request);
+
 }
