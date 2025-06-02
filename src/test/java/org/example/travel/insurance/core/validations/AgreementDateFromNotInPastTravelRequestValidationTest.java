@@ -38,7 +38,7 @@ class AgreementDateFromNotInPastTravelRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_5"))
                 .thenReturn(new ValidationError("ERROR_CODE_5", "Field agreementDateFrom must not be in the past!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
         assertEquals(errors.get().getErrorCode(), "ERROR_CODE_5");
@@ -52,7 +52,7 @@ class AgreementDateFromNotInPastTravelRequestValidationTest {
         when(request.getAgreementDateFrom()).thenReturn(parseDate("20.12.2025"));
         when(dataTimeService.getCurrentDateTime()).thenReturn(parseDate("20.10.2025"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isEmpty());
     }

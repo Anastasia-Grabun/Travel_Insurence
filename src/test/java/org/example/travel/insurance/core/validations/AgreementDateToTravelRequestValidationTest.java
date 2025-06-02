@@ -31,7 +31,7 @@ public class AgreementDateToTravelRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_4"))
                 .thenReturn(new ValidationError("ERROR_CODE_4", "Field agreementDateTo is empty!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
         assertEquals(errors.get().getErrorCode(), "ERROR_CODE_4");
@@ -44,7 +44,7 @@ public class AgreementDateToTravelRequestValidationTest {
 
         when(request.getAgreementDateTo()).thenReturn(new Date());
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isEmpty());
     }

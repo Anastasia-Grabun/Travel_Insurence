@@ -1,6 +1,7 @@
 package org.example.travel.insurance.core.util;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.util.Map;
 import java.util.Properties;
 
 @Component
+@RequiredArgsConstructor
 public class ErrorCodeUtil {
 
     @Value("errorCodes.properties")
