@@ -16,13 +16,13 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class SelectedRiskRequestValidationTest {
+public class EmptySelectedRiskValidationTest {
 
     @Mock
     private ValidationErrorFactory errorFactory;
 
     @InjectMocks
-    private SelectedRisksValidation validation;
+    private EmptySelectedRisksValidation validation;
 
 
     @Test
@@ -31,7 +31,7 @@ public class SelectedRiskRequestValidationTest {
 
         when(request.getSelected_risks()).thenReturn(Collections.singletonList("TRAVEL_MEDICAL"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertFalse(errors.isPresent());
     }
@@ -44,7 +44,7 @@ public class SelectedRiskRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_8"))
                 .thenReturn(new ValidationError("ERROR_CODE_8", "Array Selected_risks must not be empty!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertFalse(errors.isEmpty());
         assertEquals(errors.get().getErrorCode(), "ERROR_CODE_8");
@@ -59,7 +59,7 @@ public class SelectedRiskRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_8"))
                 .thenReturn(new ValidationError("ERROR_CODE_8", "Array Selected_risks must not be empty!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
         assertEquals(errors.get().getErrorCode(), "ERROR_CODE_8");

@@ -29,7 +29,7 @@ public class PersonFirstNameTravelRequestValidationTest {
 
         when(request.getPersonFirstName()).thenReturn("Nana");
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertFalse(errors.isPresent());
     }
@@ -42,7 +42,7 @@ public class PersonFirstNameTravelRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_1"))
                 .thenReturn(new ValidationError("ERROR_CODE_1", "Field personFirstName is empty!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
         assertEquals(errors.get().getErrorCode(),"ERROR_CODE_1");
@@ -57,7 +57,7 @@ public class PersonFirstNameTravelRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_1"))
                 .thenReturn(new ValidationError("ERROR_CODE_1", "Field personFirstName is empty!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertFalse(errors.isEmpty());
         assertEquals(errors.get().getErrorCode(),"ERROR_CODE_1");

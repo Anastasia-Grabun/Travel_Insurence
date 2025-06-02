@@ -2,10 +2,10 @@ package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
-import java.util.Optional;
+import java.util.List;
 
-interface TravelRequestValidation {
+interface TravelRequestListValidation {
 
-    Optional<ValidationError> validate(TravelCalculatePremiumRequest request);
+    List<ValidationError> validateList(TravelCalculatePremiumRequest request);
 
 }

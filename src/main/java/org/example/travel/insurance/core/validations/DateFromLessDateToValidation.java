@@ -13,7 +13,7 @@ class DateFromLessDateToValidation implements TravelRequestValidation {
 
     private final ValidationErrorFactory errorFactory;
 
-    public Optional<ValidationError> execute(TravelCalculatePremiumRequest request){
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request){
         Date dateFrom = request.getAgreementDateFrom();
         Date dateTo = request.getAgreementDateTo();
 

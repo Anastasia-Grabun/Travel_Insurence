@@ -32,7 +32,7 @@ public class DateFromLessDateToTravelRequestValidationTest {
         when(request.getAgreementDateFrom()).thenReturn(convertToDate("2010-10-11"));
         when(request.getAgreementDateTo()).thenReturn(convertToDate("2011-12-20"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isEmpty());
     }
@@ -46,7 +46,7 @@ public class DateFromLessDateToTravelRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_7"))
                 .thenReturn(new ValidationError("ERROR_CODE_7", "Field agreementDateTo must be after AgreementDateFrom!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
         assertEquals(errors.get().getErrorCode(), "ERROR_CODE_7");
@@ -62,7 +62,7 @@ public class DateFromLessDateToTravelRequestValidationTest {
         when(errorFactory.buildError("ERROR_CODE_7"))
                 .thenReturn(new ValidationError("ERROR_CODE_7", "Field agreementDateTo must be after AgreementDateFrom!"));
 
-        Optional<ValidationError> errors = validation.execute(request);
+        Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
         assertEquals(errors.get().getErrorCode(), "ERROR_CODE_7");
