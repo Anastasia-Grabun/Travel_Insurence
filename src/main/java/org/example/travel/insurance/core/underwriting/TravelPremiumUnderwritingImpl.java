@@ -2,6 +2,7 @@ package org.example.travel.insurance.core.underwriting;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.example.travel.insurance.dto.RiskPremium;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
@@ -14,10 +15,19 @@ class TravelPremiumUnderwritingImpl implements TravelPremiumUnderwriting {
     private final List<TravelRiskPremiumCalculator> riskPremiumCalculators;
 
     @Override
-    public BigDecimal calculatePremium(TravelCalculatePremiumRequest request) {
-        return request.getSelected_risks().stream()
-                .map(riskIc -> calculatePremiumForRisk(riskIc, request))
+    public TravelPremiumCalculationResult calculatePremium(TravelCalculatePremiumRequest request) {
+        List<RiskPremium> riskPremiums = request.getSelected_risks().stream()
+                .map(riskIc -> {
+                    BigDecimal riskPremium = calculatePremiumForRisk(riskIc, request);
+                    return new RiskPremium(riskIc, riskPremium);
+                })
+                .toList();
+
+        BigDecimal totalPremium = riskPremiums.stream()
+                .map(RiskPremium::getPremium)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new TravelPremiumCalculationResult(totalPremium, riskPremiums);
     }
 
     private BigDecimal calculatePremiumForRisk(String riskIc, TravelCalculatePremiumRequest request) {
