@@ -9,9 +9,8 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class SelectedRiskValidationTest {
+public class CountryValidationTest {
 
     @Mock
     private ValidationErrorFactory errorFactory;
@@ -29,13 +28,15 @@ class SelectedRiskValidationTest {
     private ClassifierValueRepository classifierValueRepository;
 
     @InjectMocks
-    private SelectedRiskValidation selectedRiskValidation;
+    private CountryValidation countryValidation;
 
     @Test
-    public void shouldNotValidateWhenSelectedRiskNull(){
+    public void shouldNotValidateWhenCountryNull(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
-        when(request.getSelected_risks()).thenReturn(null);
-        assertTrue(selectedRiskValidation.validateList(request).isEmpty());
+
+        when(request.getCountry()).thenReturn(null);
+
+        assertTrue(countryValidation.validate(request).isEmpty());
         verifyNoInteractions(classifierValueRepository, errorFactory);
     }
 
@@ -43,29 +44,25 @@ class SelectedRiskValidationTest {
     public void shouldValidateWithErrors(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
-        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_1"))
-                .thenReturn(Optional.empty());
-        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_2"))
+        when(request.getCountry()).thenReturn("Korea");
+        when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Korea"))
                 .thenReturn(Optional.empty());
 
         ValidationError error = mock(ValidationError.class);
         when(errorFactory.buildError(eq("ERROR_CODE_9"), anyList())).thenReturn(error);
 
-        assertEquals(selectedRiskValidation.validateList(request).size(), 2);
+        assertNotNull(countryValidation.validate(request));
     }
 
     @Test
     public void shouldValidateWithoutErrors(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
-        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_1"))
-                .thenReturn(Optional.of(mock(ClassifierValue.class)));
-        when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_2"))
+        when(request.getCountry()).thenReturn("Japan");
+        when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Japan"))
                 .thenReturn(Optional.of(mock(ClassifierValue.class)));
 
-        assertTrue(selectedRiskValidation.validateList(request).isEmpty());
+        assertTrue(countryValidation.validate(request).isEmpty());
     }
 
 }

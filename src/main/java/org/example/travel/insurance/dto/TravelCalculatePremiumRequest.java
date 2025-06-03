@@ -24,6 +24,8 @@ public class TravelCalculatePremiumRequest {
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date agreementDateTo;
 
+    private String country;
+
     @JsonProperty("selected_risks")
     private List<String> selected_risks;
 }

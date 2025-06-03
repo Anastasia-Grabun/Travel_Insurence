@@ -1,5 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
@@ -7,8 +8,8 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor
-public class EmptySelectedRisksValidation implements TravelRequestValidation{
+@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
+class EmptySelectedRisksValidation implements TravelRequestValidation{
 
     private final ValidationErrorFactory errorFactory;
 
