@@ -47,8 +47,8 @@ public class EmptySelectedRiskValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertFalse(errors.isEmpty());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_8");
-        assertEquals(errors.get().getDescription(),"Array Selected_risks must not be empty!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_8");
+        assertEquals(errors.get().description(),"Array Selected_risks must not be empty!");
     }
 
     @Test
@@ -62,8 +62,8 @@ public class EmptySelectedRiskValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_8");
-        assertEquals(errors.get().getDescription(),"Array Selected_risks must not be empty!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_8");
+        assertEquals(errors.get().description(),"Array Selected_risks must not be empty!");
     }
 
 }

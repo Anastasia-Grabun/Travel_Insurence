@@ -34,8 +34,8 @@ public class AgreementDateFromTravelRequestValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_3");
-        assertEquals(errors.get().getDescription(),      "Field agreementDateFrom is empty!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_3");
+        assertEquals(errors.get().description(),      "Field agreementDateFrom is empty!");
     }
 
     @Test

@@ -1,4 +1,4 @@
-package org.example.travel.insurance.core.underwriting;
+package org.example.travel.insurance.core.underwriting.calculators;
 
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import java.math.BigDecimal;

@@ -41,8 +41,8 @@ public class AgreementDateToNotInPastTravelRequestValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_6");
-        assertEquals(errors.get().getDescription(),"Field agreementDateTo must not be in the past!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_6");
+        assertEquals(errors.get().description(),"Field agreementDateTo must not be in the past!");
     }
 
     @Test

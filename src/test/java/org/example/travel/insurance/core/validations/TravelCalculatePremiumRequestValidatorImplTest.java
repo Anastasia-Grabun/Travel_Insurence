@@ -3,9 +3,7 @@ package org.example.travel.insurance.core.validations;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-@ExtendWith(MockitoExtension.class)
 class TravelCalculatePremiumRequestValidatorImplTest {
 
     @InjectMocks
@@ -42,18 +39,18 @@ class TravelCalculatePremiumRequestValidatorImplTest {
     public void shouldReturnErrors() {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
         TravelRequestValidation validation1 = mock(TravelRequestValidation.class);
-
-        when(validation1.validate(request)).thenReturn(Optional.of(new ValidationError()));
         TravelRequestValidation validation2 = mock(TravelRequestValidation.class);
-        when(validation2.validate(request)).thenReturn(Optional.of(new ValidationError()));
 
-        List<TravelRequestValidation> travelValidations = List.of(
-                validation1, validation2
-        );
-        ReflectionTestUtils.setField(requestValidator, "travelValidations", travelValidations);
+        when(validation1.validate(request))
+                .thenReturn(Optional.of(new ValidationError("ERR1", "Invalid destination")));
+        when(validation2.validate(request))
+                .thenReturn(Optional.of(new ValidationError("ERR2", "Missing start date")));
+
+        List<TravelRequestValidation> travelValidations = List.of(validation1, validation2);
+        ReflectionTestUtils.setField(requestValidator, "singleValidations", travelValidations);
         List<ValidationError> errors = requestValidator.validate(request);
 
-        assertEquals(errors.size(), 2);
+        assertEquals(2, errors.size());
     }
 
 }

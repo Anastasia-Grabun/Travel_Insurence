@@ -1,4 +1,4 @@
-package org.example.travel.insurance.core.underwriting;
+package org.example.travel.insurance.core.underwriting.calculators;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

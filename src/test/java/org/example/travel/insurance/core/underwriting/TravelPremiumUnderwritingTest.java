@@ -1,6 +1,7 @@
 package org.example.travel.insurance.core.underwriting;
 
-import org.example.travel.insurance.core.util.DateTimeUtil;
+import org.example.travel.insurance.core.underwriting.calculators.TravelPremiumCalculationResult;
+import org.example.travel.insurance.dto.RiskPremium;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,9 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,29 +18,23 @@ import static org.mockito.Mockito.when;
 class TravelPremiumUnderwritingTest {
 
     @Mock
-    private DateTimeUtil dateTimeUtil;
+    private SelectedRisksPremiumCalculator selectedRisksPremiumCalculator;
 
     @InjectMocks
-    private TravelPremiumUnderwritingImpl travelPremiumUnderwritingImpl;
+    private TravelPremiumUnderwriting travelPremiumUnderwriting;
 
     @Test
-    public void shouldReturnResponseWithCorrectAgreementPrice() {
+    void shouldCalculateTotalPremiumAsSumOfRiskPremiums(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        List<RiskPremium> riskPremiums = List.of(
+                new RiskPremium("TRAVEL_MEDICAL", BigDecimal.ONE),
+                new RiskPremium("TRAVEL_EVACUATION", BigDecimal.ONE)
+        );
 
-        when(request.getAgreementDateFrom()).thenReturn(parseDate("01.01.2024"));
-        when(request.getAgreementDateTo()).thenReturn(parseDate("10.01.2024"));
-        when(dateTimeUtil.calculateDurationInDays(request.getAgreementDateFrom(), request.getAgreementDateTo())).thenReturn(9L);
-        BigDecimal premium = travelPremiumUnderwritingImpl.calculatePremium(request);
+        when(selectedRisksPremiumCalculator.calculatePremiumForAllRisks(request)).thenReturn(riskPremiums);
 
-        assertEquals(premium, new BigDecimal(9));
-    }
-
-    private Date parseDate(String dateStr) {
-        try {
-            return new SimpleDateFormat("dd.MM.yyyy").parse(dateStr);
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        TravelPremiumCalculationResult result = travelPremiumUnderwriting.calculatePremium(request);
+        assertEquals(result.totalPremium(), new BigDecimal(2));
     }
 
 }

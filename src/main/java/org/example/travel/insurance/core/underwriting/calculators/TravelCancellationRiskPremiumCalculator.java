@@ -1,11 +1,11 @@
-package org.example.travel.insurance.core.underwriting;
+package org.example.travel.insurance.core.underwriting.calculators;
 
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-class TravelCancellationRiskPremiumCalculator implements TravelRiskPremiumCalculator{
+class TravelCancellationRiskPremiumCalculator implements TravelRiskPremiumCalculator {
 
     @Override
     public BigDecimal calculatePremium(TravelCalculatePremiumRequest request) {

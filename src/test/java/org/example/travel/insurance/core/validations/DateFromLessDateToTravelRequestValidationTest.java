@@ -49,8 +49,8 @@ public class DateFromLessDateToTravelRequestValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_7");
-        assertEquals(errors.get().getDescription(), "Field agreementDateTo must be after AgreementDateFrom!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_7");
+        assertEquals(errors.get().description(), "Field agreementDateTo must be after AgreementDateFrom!");
     }
 
     @Test
@@ -65,8 +65,8 @@ public class DateFromLessDateToTravelRequestValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_7");
-        assertEquals(errors.get().getDescription(), "Field agreementDateTo must be after AgreementDateFrom!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_7");
+        assertEquals(errors.get().description(), "Field agreementDateTo must be after AgreementDateFrom!");
     }
 
     private Date convertToDate(String date) {

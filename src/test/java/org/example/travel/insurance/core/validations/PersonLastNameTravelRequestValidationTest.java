@@ -45,8 +45,8 @@ public class PersonLastNameTravelRequestValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertFalse(errors.isEmpty());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_2");
-        assertEquals(errors.get().getDescription(), "Field personLastName is empty!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_2");
+        assertEquals(errors.get().description(), "Field personLastName is empty!");
     }
 
     @Test
@@ -60,8 +60,8 @@ public class PersonLastNameTravelRequestValidationTest {
         Optional<ValidationError> errors = validation.validate(request);
 
         assertTrue(errors.isPresent());
-        assertEquals(errors.get().getErrorCode(), "ERROR_CODE_2");
-        assertEquals(errors.get().getDescription(), "Field personLastName is empty!");
+        assertEquals(errors.get().errorCode(), "ERROR_CODE_2");
+        assertEquals(errors.get().description(), "Field personLastName is empty!");
     }
 
 }

@@ -2,8 +2,8 @@ package org.example.travel.insurance.core.services;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.core.services.TravelCalculatePremiumService;
 import org.example.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
+import org.example.travel.insurance.core.underwriting.calculators.TravelPremiumCalculationResult;
 import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
@@ -15,31 +15,33 @@ import java.util.List;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService {
 
-    private final TravelPremiumUnderwriting travelPremiumUnderwritingImpl;
+
     private final TravelCalculatePremiumRequestValidator requestValidator;
+    private final TravelPremiumUnderwriting premiumUnderwriting;
 
     @Override
     public TravelCalculatePremiumResponse calculatePremium(TravelCalculatePremiumRequest request) {
         List<ValidationError> errors = requestValidator.validate(request);
-        return errors.isEmpty() ? buildResponse(request) : buildResponse(errors);
+        return errors.isEmpty()
+                ? buildResponse(request, premiumUnderwriting.calculatePremium(request))
+                : buildResponse(errors);
     }
 
-    private TravelCalculatePremiumResponse buildResponse(TravelCalculatePremiumRequest request){
-        TravelCalculatePremiumResponse response = new TravelCalculatePremiumResponse();
+    private TravelCalculatePremiumResponse buildResponse(List<ValidationError> errors) {
+        return new TravelCalculatePremiumResponse(errors);
+    }
 
+    private TravelCalculatePremiumResponse buildResponse(TravelCalculatePremiumRequest request,
+                                                         TravelPremiumCalculationResult premiumCalculationResult) {
+        TravelCalculatePremiumResponse response = new TravelCalculatePremiumResponse();
         response.setPersonFirstName(request.getPersonFirstName());
         response.setPersonLastName(request.getPersonLastName());
         response.setAgreementDateFrom(request.getAgreementDateFrom());
         response.setAgreementDateTo(request.getAgreementDateTo());
-
-        var duration = travelPremiumUnderwritingImpl.calculatePremium(request);
-        response.setAgreementPrice(duration);
+        response.setAgreementPremium(premiumCalculationResult.totalPremium());
+        response.setRisks(premiumCalculationResult.riskPremiums());
 
         return response;
-    }
-
-    private TravelCalculatePremiumResponse buildResponse(List<ValidationError> errors){
-        return new TravelCalculatePremiumResponse(errors);
     }
 
 }
