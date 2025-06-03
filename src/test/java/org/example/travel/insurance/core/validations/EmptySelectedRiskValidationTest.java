@@ -29,7 +29,7 @@ public class EmptySelectedRiskValidationTest {
     public void shouldNotReturnErrorWhenSelectedRiskAreChosen(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(Collections.singletonList("TRAVEL_MEDICAL"));
+        when(request.getSelectedRisks()).thenReturn(Collections.singletonList("TRAVEL_MEDICAL"));
 
         Optional<ValidationError> errors = validation.validate(request);
 
@@ -40,7 +40,7 @@ public class EmptySelectedRiskValidationTest {
     public void shouldReturnErrorWhenSelectedRisksAreNull(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(null);
+        when(request.getSelectedRisks()).thenReturn(null);
         when(errorFactory.buildError("ERROR_CODE_8"))
                 .thenReturn(new ValidationError("ERROR_CODE_8", "Array Selected_risks must not be empty!"));
 
@@ -55,7 +55,7 @@ public class EmptySelectedRiskValidationTest {
     public void shouldReturnErrorWhenPersonLastNameIsEmpty() {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(Collections.EMPTY_LIST);
+        when(request.getSelectedRisks()).thenReturn(Collections.EMPTY_LIST);
         when(errorFactory.buildError("ERROR_CODE_8"))
                 .thenReturn(new ValidationError("ERROR_CODE_8", "Array Selected_risks must not be empty!"));
 

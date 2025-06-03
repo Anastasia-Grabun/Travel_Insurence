@@ -2,8 +2,9 @@ package org.example.travel.insurance.core.services;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
-import org.example.travel.insurance.core.underwriting.calculators.TravelPremiumCalculationResult;
+import org.example.travel.insurance.core.underwriting.TravelPremiumCalculationResult;
 import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
@@ -11,6 +12,7 @@ import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Service;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService {
@@ -22,6 +24,7 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
     @Override
     public TravelCalculatePremiumResponse calculatePremium(TravelCalculatePremiumRequest request) {
         List<ValidationError> errors = requestValidator.validate(request);
+
         return errors.isEmpty()
                 ? buildResponse(request, premiumUnderwriting.calculatePremium(request))
                 : buildResponse(errors);
@@ -36,8 +39,10 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
         TravelCalculatePremiumResponse response = new TravelCalculatePremiumResponse();
         response.setPersonFirstName(request.getPersonFirstName());
         response.setPersonLastName(request.getPersonLastName());
+        response.setPersonBirthDate(request.getPersonBirthDate());
         response.setAgreementDateFrom(request.getAgreementDateFrom());
         response.setAgreementDateTo(request.getAgreementDateTo());
+        response.setCountry(request.getCountry());
         response.setAgreementPremium(premiumCalculationResult.totalPremium());
         response.setRisks(premiumCalculationResult.riskPremiums());
 

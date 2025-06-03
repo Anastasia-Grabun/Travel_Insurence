@@ -19,6 +19,9 @@ public class TravelCalculatePremiumRequest {
     private String personLastName;
 
     @JsonFormat(pattern="yyyy-MM-dd")
+    private Date personBirthDate;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date agreementDateFrom;
 
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -27,5 +30,6 @@ public class TravelCalculatePremiumRequest {
     private String country;
 
     @JsonProperty("selected_risks")
-    private List<String> selected_risks;
+    private List<String> selectedRisks;
+
 }

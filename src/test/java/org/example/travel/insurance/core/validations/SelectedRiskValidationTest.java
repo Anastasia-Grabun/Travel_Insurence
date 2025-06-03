@@ -34,7 +34,7 @@ class SelectedRiskValidationTest {
     @Test
     public void shouldNotValidateWhenSelectedRiskNull(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
-        when(request.getSelected_risks()).thenReturn(null);
+        when(request.getSelectedRisks()).thenReturn(null);
         assertTrue(selectedRiskValidation.validateList(request).isEmpty());
         verifyNoInteractions(classifierValueRepository, errorFactory);
     }
@@ -43,7 +43,7 @@ class SelectedRiskValidationTest {
     public void shouldValidateWithErrors(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
+        when(request.getSelectedRisks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
         when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_1"))
                 .thenReturn(Optional.empty());
         when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_2"))
@@ -59,7 +59,7 @@ class SelectedRiskValidationTest {
     public void shouldValidateWithoutErrors(){
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
-        when(request.getSelected_risks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
+        when(request.getSelectedRisks()).thenReturn(List.of("RISK_IC_1", "RISK_IC_2"));
         when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_1"))
                 .thenReturn(Optional.of(mock(ClassifierValue.class)));
         when(classifierValueRepository.findByClassifierTitleAndIc("RISK_TYPE", "RISK_IC_2"))

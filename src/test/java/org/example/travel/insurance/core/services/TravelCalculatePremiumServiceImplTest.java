@@ -1,7 +1,7 @@
 package org.example.travel.insurance.core.services;
 
 import org.example.travel.insurance.core.underwriting.TravelPremiumUnderwriting;
-import org.example.travel.insurance.core.underwriting.calculators.TravelPremiumCalculationResult;
+import org.example.travel.insurance.core.underwriting.TravelPremiumCalculationResult;
 import org.example.travel.insurance.core.validations.TravelCalculatePremiumRequestValidator;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;

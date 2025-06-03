@@ -1,10 +1,13 @@
 package org.example.travel.insurance.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.example.travel.insurance.core.util.BigDecimalSerializer;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
@@ -19,6 +22,9 @@ public class TravelCalculatePremiumResponse extends CoreResponse {
     private String personLastName;
 
     @JsonFormat(pattern="yyyy-MM-dd")
+    private Date personBirthDate;
+
+    @JsonFormat(pattern="yyyy-MM-dd")
     private Date agreementDateFrom;
 
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -26,6 +32,7 @@ public class TravelCalculatePremiumResponse extends CoreResponse {
 
     private String country;
 
+    @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal agreementPremium;
 
     private List<RiskPremium> risks;

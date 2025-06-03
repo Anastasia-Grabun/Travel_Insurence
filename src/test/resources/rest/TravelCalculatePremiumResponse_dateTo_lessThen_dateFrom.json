@@ -1,13 +1,17 @@
 {
   "errors": [
     {
-      "field": "ERROR_CODE_7",
-      "message": "Field agreementDateTo must be after AgreementDateFrom!"
+      "errorCode": "ERROR_CODE_7",
+      "description": "Field agreementDateTo must be after AgreementDateFrom!"
     }
   ],
   "personFirstName": null,
   "personLastName": null,
+  "personBirthDate": null,
   "agreementDateFrom": null,
   "agreementDateTo": null,
-  "agreementPrice": null
+  "country": null,
+  "agreementPremium": null,
+  "risks": null
 }
+

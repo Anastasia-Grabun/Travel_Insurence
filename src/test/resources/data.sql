@@ -31,4 +31,12 @@ SELECT cl.id, 'SPAIN', 'country Spain' FROM classifiers cl WHERE cl.title = 'COU
 INSERT INTO classifier_values (classifier_id, ic, description)
 SELECT cl.id, 'JAPAN', 'country Japan' FROM classifiers cl WHERE cl.title = 'COUNTRY';
 
+---country_default_day_rate
+INSERT INTO country_default_day_rate(country_ic, default_day_rate)
+VALUES('LATVIA', 1.00);
+INSERT INTO country_default_day_rate(country_ic, default_day_rate)
+VALUES('SPAIN', 2.50);
+INSERT INTO country_default_day_rate(country_ic, default_day_rate)
+VALUES('JAPAN', 3.50);
+
 

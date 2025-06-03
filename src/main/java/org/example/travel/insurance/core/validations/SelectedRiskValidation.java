@@ -1,6 +1,7 @@
 package org.example.travel.insurance.core.validations;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.example.travel.insurance.core.repositories.ClassifierValueRepository;
 import org.example.travel.insurance.core.util.Placeholder;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 class SelectedRiskValidation implements TravelRequestListValidation{
@@ -19,11 +21,12 @@ class SelectedRiskValidation implements TravelRequestListValidation{
 
     @Override
     public List<ValidationError> validateList(TravelCalculatePremiumRequest request) {
-        List<String> selected_risks = request.getSelected_risks();
+        List<String> selected_risks = request.getSelectedRisks();
         return selected_risks == null ? List.of() : validateSelectedRisks(selected_risks);
     }
 
     private List<ValidationError> validateSelectedRisks(List<String> selectedRisks) {
+        log.info("Selected risks for validation: {}", selectedRisks);
         return selectedRisks.stream()
                 .map(this::validateRiskIc)
                 .filter(Optional::isPresent)
@@ -32,10 +35,14 @@ class SelectedRiskValidation implements TravelRequestListValidation{
     }
 
     private Optional<ValidationError> validateRiskIc(String riskIc){
-        return !existInDatabase(riskIc)
+        boolean exists = existInDatabase(riskIc);
+        log.info("Validating riskIc: {}, exists in DB: {}", riskIc, exists);
+
+        return !exists
                 ? Optional.of(buildValidationError(riskIc))
                 : Optional.empty();
     }
+
 
     private ValidationError buildValidationError(String riskIc){
         Placeholder placeholder = new Placeholder("NOT_EXISTING_RISK_TYPE", riskIc);

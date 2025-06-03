@@ -2,7 +2,6 @@ package org.example.travel.insurance.core.underwriting;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.core.underwriting.calculators.TravelRiskPremiumCalculator;
 import org.example.travel.insurance.dto.RiskPremium;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.springframework.stereotype.Component;
@@ -15,19 +14,14 @@ class SelectedRisksPremiumCalculator {
 
     private final List<TravelRiskPremiumCalculator> riskPremiumCalculators;
 
-    public List<RiskPremium> calculatePremiumForAllRisks(TravelCalculatePremiumRequest request) {
-        List<RiskPremium> riskPremiums = request.getSelected_risks().stream()
-                .map(riskIc -> {
-                    return new RiskPremium(riskIc, calculatePremiumForRisk(riskIc, request));
-                })
+    List<RiskPremium> calculatePremiumForAllRisks(TravelCalculatePremiumRequest request) {
+        return request.getSelectedRisks().stream()
+                .map(riskIc -> new RiskPremium(riskIc, calculatePremiumForRisk(riskIc, request)))
                 .toList();
-
-        return riskPremiums;
     }
 
     private BigDecimal calculatePremiumForRisk(String riskIc, TravelCalculatePremiumRequest request) {
-        var riskPremiumCalculator = findRiskPremiumCalculator(riskIc);
-        return riskPremiumCalculator.calculatePremium(request);
+        return findRiskPremiumCalculator(riskIc).calculatePremium(request);
     }
 
     private TravelRiskPremiumCalculator findRiskPremiumCalculator(String riskIc) {

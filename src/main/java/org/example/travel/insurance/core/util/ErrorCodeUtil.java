@@ -16,7 +16,7 @@ import java.util.Properties;
 @RequiredArgsConstructor
 public class ErrorCodeUtil {
 
-    @Value("errorCodes.properties")
+    @Value("classpath:errorCodes.properties")
     private Resource file;
 
     private final Map<String, String> errorMessages = new HashMap<>();

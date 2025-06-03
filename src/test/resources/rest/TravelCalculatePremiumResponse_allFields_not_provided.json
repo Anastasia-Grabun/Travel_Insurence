@@ -1,29 +1,31 @@
-{
-  "errors": [
-    {
-      "field": "ERROR_CODE_4!",
-      "message": "Field agreementDateTo is empty"
-    },
-    {
-      "field": "ERROR_CODE_3",
-      "message": "Field agreementDateFrom is empty!"
-    },
-    {
-      "field": "ERROR_CODE_1",
-      "message": "Field personFirstName is empty!"
-    },
-    {
-      "field": "ERROR_CODE_2",
-      "message": "Field personLastName is empty!"
-    },
-    {
-      "field": "ERROR_CODE_8",
-      "message": "Array Selected_risks must not be empty!"
-    }
-  ],
+{"errors":[
+  {
+    "errorCode":"ERROR_CODE_3",
+    "description":"Field agreementDateFrom is empty!"
+  },
+  {
+    "errorCode":"ERROR_CODE_4",
+    "description":"Field agreementDateTo is empty!"
+  },
+  {
+    "errorCode":"ERROR_CODE_8",
+    "description":"Array Selected_risks must not be empty!"
+  },
+  {
+    "errorCode":"ERROR_CODE_1",
+    "description":"Field personFirstName is empty!"
+  },
+  {
+    "errorCode":"ERROR_CODE_2",
+    "description":"Field personLastName is empty!"
+  }
+],
   "personFirstName": null,
   "personLastName": null,
+  "personBirthDate": null,
   "agreementDateFrom": null,
   "agreementDateTo": null,
-  "agreementPrice": null
+  "country": null,
+  "agreementPremium": null,
+  "risks": null
 }

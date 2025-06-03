@@ -1,6 +1,5 @@
 package org.example.travel.insurance.core.underwriting;
 
-import org.example.travel.insurance.core.underwriting.calculators.TravelRiskPremiumCalculator;
 import org.example.travel.insurance.dto.RiskPremium;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ class SelectedRisksPremiumCalculatorTest {
         when(riskPremiumCalculator1.getRiskIc()).thenReturn("TRAVEL_MEDICAL");
         when(riskPremiumCalculator1.calculatePremium(any())).thenReturn(BigDecimal.ONE);
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
-        when(request.getSelected_risks()).thenReturn(List.of("TRAVEL_MEDICAL"));
+        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
         List<RiskPremium> riskPremiums = calculator.calculatePremiumForAllRisks(request);
         assertEquals(riskPremiums.size(), 1);
         assertEquals(riskPremiums.get(0).getRickIc(), "TRAVEL_MEDICAL");
@@ -52,7 +51,7 @@ class SelectedRisksPremiumCalculatorTest {
         when(riskPremiumCalculator2.calculatePremium(any())).thenReturn(BigDecimal.ONE);
 
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
-        when(request.getSelected_risks()).thenReturn(List.of("TRAVEL_MEDICAL", "TRAVEL_EVACUATION"));
+        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL", "TRAVEL_EVACUATION"));
 
         List<RiskPremium> riskPremiums = calculator.calculatePremiumForAllRisks(request);
         assertEquals(riskPremiums.size(), 2);
@@ -68,7 +67,7 @@ class SelectedRisksPremiumCalculatorTest {
         when(riskPremiumCalculator2.getRiskIc()).thenReturn("TRAVEL_EVACUATION");
 
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
-        when(request.getSelected_risks()).thenReturn(List.of("NOT_SUPPORTED_RISK_TYPE"));
+        when(request.getSelectedRisks()).thenReturn(List.of("NOT_SUPPORTED_RISK_TYPE"));
 
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> calculator.calculatePremiumForAllRisks(request));

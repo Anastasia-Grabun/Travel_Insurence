@@ -2,7 +2,6 @@ package org.example.travel.insurance.core.underwriting;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.core.underwriting.calculators.TravelPremiumCalculationResult;
 import org.example.travel.insurance.dto.RiskPremium;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.springframework.stereotype.Component;

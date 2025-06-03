@@ -28,3 +28,13 @@ FROM classifiers c,
           ('JAPAN', 'country Japan')
      ) AS v(ic, description)
 WHERE c.title = 'COUNTRY';
+
+---country_default_day_rate
+INSERT INTO country_default_day_rate(country_ic, default_day_rate)
+VALUES('LATVIA', 1.00);
+
+INSERT INTO country_default_day_rate(country_ic, default_day_rate)
+VALUES('SPAIN', 2.50);
+
+INSERT INTO country_default_day_rate(country_ic, default_day_rate)
+VALUES('JAPAN', 3.50);
