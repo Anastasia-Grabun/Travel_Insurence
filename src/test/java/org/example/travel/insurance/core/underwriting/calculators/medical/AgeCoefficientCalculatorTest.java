@@ -23,8 +23,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class AgeCoefficientCalculatorTest {
 
-    @Mock private DateTimeUtil dateTimeUtil;
-    @Mock private AgeCoefficientRepository ageCoefficientRepository;
+    @Mock
+    private DateTimeUtil dateTimeUtil;
+
+    @Mock
+    private AgeCoefficientRepository ageCoefficientRepository;
 
     @InjectMocks
     private AgeCoefficientCalculator calculator;

@@ -2,26 +2,32 @@ package org.example.travel.insurance.core.validations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.core.repositories.ClassifierValueRepository;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.example.travel.insurance.dto.ValidationError;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class CountryValidation implements TravelRequestValidation {
+class EmptyMedicalRiskLimitLevelValidation implements TravelRequestValidation{
 
-    private final ClassifierValueRepository classifierValueRepository;
+    @Value( "${medical.risk.limit.level.enabled:false}" )
+    private Boolean medicalRiskLimitLevelEnabled;
+
     private final ValidationErrorFactory errorFactory;
 
     @Override
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        return (containsTravelMedical(request)
-                && isCountryNotBlank(request))
-                && !existInDatabase(request.getCountry())
-                ? Optional.of(errorFactory.buildError("ERROR_CODE_15"))
+        return (isMedicalRiskLimitLevelEnabled()
+                && containsTravelMedical(request)
+                && isMedicalRiskLimitLevelIsNullOrBlank(request))
+                ? Optional.of(errorFactory.buildError("ERROR_CODE_13"))
                 : Optional.empty();
+    }
+
+    private boolean isMedicalRiskLimitLevelEnabled() {
+        return medicalRiskLimitLevelEnabled;
     }
 
     private boolean containsTravelMedical(TravelCalculatePremiumRequest request) {
@@ -29,13 +35,8 @@ class CountryValidation implements TravelRequestValidation {
                 && request.getSelectedRisks().contains("TRAVEL_MEDICAL");
     }
 
-    private boolean isCountryNotBlank(TravelCalculatePremiumRequest request) {
-        return request.getCountry() != null && !request.getCountry().isBlank();
-    }
-
-    private boolean existInDatabase(String countryIc) {
-        return classifierValueRepository
-                .findByClassifierTitleAndIc("COUNTRY", countryIc).isPresent();
+    private boolean isMedicalRiskLimitLevelIsNullOrBlank(TravelCalculatePremiumRequest request) {
+        return request.getMedicalRiskLimitLevel() == null || request.getMedicalRiskLimitLevel().isBlank();
     }
 
 }

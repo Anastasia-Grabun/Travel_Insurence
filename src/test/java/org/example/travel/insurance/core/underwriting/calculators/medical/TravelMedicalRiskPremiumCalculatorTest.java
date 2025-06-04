@@ -24,6 +24,9 @@ class TravelMedicalRiskPremiumCalculatorTest {
     @Mock
     private AgeCoefficientCalculator ageCoefficientCalculator;
 
+    @Mock
+    private RiskLimitLevelCalculator riskCalculator;
+
     @InjectMocks
     private TravelMedicalRiskPremiumCalculator calculator;
 
@@ -39,12 +42,15 @@ class TravelMedicalRiskPremiumCalculatorTest {
         BigDecimal daysCount = BigDecimal.valueOf(10);
         BigDecimal countryDefaultRate = BigDecimal.valueOf(20);
         BigDecimal ageCoefficient = BigDecimal.valueOf(1.2);
+        BigDecimal riskCoefficient = BigDecimal.valueOf(1.5);
 
         when(dayCountCalculator.calculate(request)).thenReturn(daysCount);
         when(countryDefaultDayRateCalculator.calculate(request)).thenReturn(countryDefaultRate);
         when(ageCoefficientCalculator.calculate(request)).thenReturn(ageCoefficient);
+        when(riskCalculator.calculate(request)).thenReturn(riskCoefficient);
 
-        BigDecimal expectedPremium = countryDefaultRate.multiply(daysCount).multiply(ageCoefficient)
+        BigDecimal expectedPremium = countryDefaultRate.multiply(daysCount)
+                .multiply(ageCoefficient).multiply(riskCoefficient)
                 .setScale(2, RoundingMode.HALF_UP);
 
         BigDecimal result = calculator.calculatePremium(request);

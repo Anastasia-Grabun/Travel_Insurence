@@ -18,7 +18,8 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class DayCountCalculatorTest {
 
-    @Mock private DateTimeUtil dateTimeUtil;
+    @Mock
+    private DateTimeUtil dateTimeUtil;
 
     @InjectMocks
     private DayCountCalculator calculator;

@@ -9,11 +9,10 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import java.util.List;
 import java.util.Optional;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.ArgumentMatchers.anyList;
-import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -35,23 +34,26 @@ public class CountryValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getCountry()).thenReturn(null);
+        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
 
         assertTrue(countryValidation.validate(request).isEmpty());
         verifyNoInteractions(classifierValueRepository, errorFactory);
     }
 
     @Test
-    public void shouldValidateWithErrors(){
+    public void shouldValidateWithErrors() {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getCountry()).thenReturn("Korea");
+        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
+
         when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Korea"))
                 .thenReturn(Optional.empty());
 
         ValidationError error = mock(ValidationError.class);
-        when(errorFactory.buildError(eq("ERROR_CODE_9"), anyList())).thenReturn(error);
+        when(errorFactory.buildError(("ERROR_CODE_15"))).thenReturn(error);
 
-        assertNotNull(countryValidation.validate(request));
+        assertEquals(Optional.of(error), countryValidation.validate(request));
     }
 
     @Test
@@ -59,6 +61,7 @@ public class CountryValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getCountry()).thenReturn("Japan");
+        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
         when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Japan"))
                 .thenReturn(Optional.of(mock(ClassifierValue.class)));
 
