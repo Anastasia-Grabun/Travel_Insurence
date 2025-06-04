@@ -18,3 +18,11 @@ CREATE TABLE IF NOT EXISTS country_default_day_rate(
     default_day_rate DECIMAL(10,2) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS age_coefficient(
+    id BIGSERIAL PRIMARY KEY,
+    age_from INT NOT NULL,
+    age_to INT NOT NULL,
+    coefficient DECIMAL(10,2) NOT NULL
+);
+
+

@@ -23,7 +23,7 @@ public class CountryDefaultDayRate {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Double id;
+    private Long id;
 
     @Column(name = "country_ic", nullable = false)
     private String countryIc;

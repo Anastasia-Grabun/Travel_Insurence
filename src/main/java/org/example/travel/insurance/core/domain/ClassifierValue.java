@@ -24,7 +24,7 @@ public class ClassifierValue {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Double id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "classifier_id", nullable = false)
