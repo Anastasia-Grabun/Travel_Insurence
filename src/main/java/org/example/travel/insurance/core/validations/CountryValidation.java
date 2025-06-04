@@ -20,7 +20,7 @@ class CountryValidation implements TravelRequestValidation{
     @Override
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
         String country = request.getCountry();
-        return country == null ? Optional.empty() : validateCountry(country);
+        return (country == null || country.isEmpty()) ? Optional.empty() : validateCountry(country);
     }
 
     private Optional<ValidationError> validateCountry(String countryIc){

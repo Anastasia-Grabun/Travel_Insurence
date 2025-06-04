@@ -20,7 +20,7 @@ class TravelPremiumUnderwritingTest {
     private SelectedRisksPremiumCalculator selectedRisksPremiumCalculator;
 
     @InjectMocks
-    private TravelPremiumUnderwriting travelPremiumUnderwriting;
+    private TravelPremiumUnderwritingImpl travelPremiumUnderwriting;
 
     @Test
     void shouldCalculateTotalPremiumAsSumOfRiskPremiums(){

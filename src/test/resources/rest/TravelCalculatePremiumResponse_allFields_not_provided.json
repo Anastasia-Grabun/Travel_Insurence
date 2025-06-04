@@ -18,6 +18,9 @@
   {
     "errorCode":"ERROR_CODE_2",
     "description":"Field personLastName is empty!"
+  },
+  { "errorCode": "ERROR_CODE_11",
+    "description": "Field personBirthDate must not be empty!"
   }
 ],
   "personFirstName": null,

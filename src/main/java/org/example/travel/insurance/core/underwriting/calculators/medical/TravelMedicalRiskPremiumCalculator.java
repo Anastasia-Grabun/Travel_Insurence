@@ -21,6 +21,7 @@ public class TravelMedicalRiskPremiumCalculator implements TravelRiskPremiumCalc
         var daysCount = dayCountCalculator.calculate(request);
         var countryDefaultRate = countryDefaultDayRateCalculator.calculate(request);
         var ageCoefficient = ageCoefficientCalculator.calculate(request);
+
         return countryDefaultRate
                 .multiply(daysCount)
                 .multiply(ageCoefficient)
