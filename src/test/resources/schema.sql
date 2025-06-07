@@ -25,4 +25,11 @@ CREATE TABLE IF NOT EXISTS age_coefficient(
     coefficient DECIMAL(10,2) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS medical_risk_limit_level(
+    id BIGSERIAL PRIMARY KEY,
+    medical_risk_limit_level_ic VARCHAR(200) NOT NULL UNIQUE,
+    coefficient DECIMAL(10,2) NOT NULL
+);
+
+
 
