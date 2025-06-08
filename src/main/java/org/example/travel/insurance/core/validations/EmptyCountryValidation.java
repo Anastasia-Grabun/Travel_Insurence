@@ -16,15 +16,9 @@ class EmptyCountryValidation implements TravelRequestValidation {
     private final ValidationErrorFactory errorFactory;
 
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        return (containsTravelMedicalRisk(request) && countryIsNullOrBlank(request))
+        return (countryIsNullOrBlank(request))
                 ? Optional.of(errorFactory.buildError("ERROR_CODE_10"))
                 : Optional.empty();
-    }
-
-    private boolean containsTravelMedicalRisk(TravelCalculatePremiumRequest request){
-        return request != null &&
-                request.getSelectedRisks() != null &&
-                request.getSelectedRisks().contains("TRAVEL_MEDICAL");
     }
 
     private boolean countryIsNullOrBlank(TravelCalculatePremiumRequest request) {
