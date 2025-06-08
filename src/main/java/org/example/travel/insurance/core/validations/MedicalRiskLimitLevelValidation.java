@@ -21,21 +21,10 @@ class MedicalRiskLimitLevelValidation implements TravelRequestValidation {
 
     @Override
     public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
-        return (isMedicalRiskLimitLevelEnabled()
-                && containsTravelMedical(request)
-                && isMedicalRiskLimitLevelNotBlank(request))
+        return (isMedicalRiskLimitLevelNotBlank(request))
                 && !existInDatabase(request.getMedicalRiskLimitLevel())
                 ? Optional.of(errorFactory.buildError("ERROR_CODE_14"))
                 : Optional.empty();
-    }
-
-    private boolean isMedicalRiskLimitLevelEnabled() {
-        return medicalRiskLimitLevelEnabled;
-    }
-
-    private boolean containsTravelMedical(TravelCalculatePremiumRequest request) {
-        return request.getSelectedRisks() != null
-                && request.getSelectedRisks().contains("TRAVEL_MEDICAL");
     }
 
     private boolean isMedicalRiskLimitLevelNotBlank(TravelCalculatePremiumRequest request) {

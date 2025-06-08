@@ -6,9 +6,6 @@ import org.example.travel.insurance.core.util.DateTimeUtil;
 import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.test.util.ReflectionTestUtils;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -17,24 +14,20 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
 
 class AgeCoefficientCalculatorTest {
 
-    @Mock
     private DateTimeUtil dateTimeUtil;
-
-    @Mock
     private AgeCoefficientRepository ageCoefficientRepository;
-
-    @InjectMocks
-    private AgeCoefficientCalculator ageCoefficientCalculator;
 
     private TravelCalculatePremiumRequest request;
 
     @BeforeEach
     void setUp() {
+        dateTimeUtil = mock(DateTimeUtil.class);
+        ageCoefficientRepository = mock(AgeCoefficientRepository.class);
+
         request = new TravelCalculatePremiumRequest();
         request.setPersonBirthDate(Date.from(LocalDate.of(1990, 1, 1)
                 .atStartOfDay(ZoneId.systemDefault()).toInstant()));
@@ -42,14 +35,14 @@ class AgeCoefficientCalculatorTest {
 
     @Test
     void shouldReturnOneWhenDisabled() {
-        ReflectionTestUtils.setField(ageCoefficientCalculator, "medicalRiskLimitLevelEnabled", false);
-        BigDecimal result = ageCoefficientCalculator.calculate(request);
+        var calculator = new AgeCoefficientCalculator(false, dateTimeUtil, ageCoefficientRepository);
+        BigDecimal result = calculator.calculate(request);
         assertEquals(BigDecimal.ONE, result);
-        verifyNoInteractions(ageCoefficientRepository);
     }
 
     @Test
     void shouldFindCoefficientWhenAgeCoefficientExists() {
+        var calculator = new AgeCoefficientCalculator(true, dateTimeUtil, ageCoefficientRepository);
         LocalDate currentDate = LocalDate.of(2023, 3, 27);
         int age = 33;
         BigDecimal expectedCoefficient = BigDecimal.valueOf(1.2);
@@ -59,23 +52,23 @@ class AgeCoefficientCalculatorTest {
         when(ageCoefficient.getCoefficient()).thenReturn(expectedCoefficient);
         when(ageCoefficientRepository.findCoefficient(age)).thenReturn(Optional.of(ageCoefficient));
 
-        BigDecimal result = ageCoefficientCalculator.calculate(request);
+        BigDecimal result = calculator.calculate(request);
 
         assertEquals(expectedCoefficient, result);
     }
 
     @Test
     void shouldThrowExceptionWhenAgeCoefficientNotFound() {
+        var calculator = new AgeCoefficientCalculator(true, dateTimeUtil, ageCoefficientRepository);
         LocalDate currentDate = LocalDate.of(2023, 3, 27);
         int age = 33;
 
         when(dateTimeUtil.getCurrentDateTime()).thenReturn(Date.from(currentDate.atStartOfDay(ZoneId.systemDefault()).toInstant()));
         when(ageCoefficientRepository.findCoefficient(age)).thenReturn(Optional.empty());
 
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> ageCoefficientCalculator.calculate(request));
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> calculator.calculate(request));
 
         assertEquals("Age coefficient not found for age = " + age, exception.getMessage());
     }
-
 
 }

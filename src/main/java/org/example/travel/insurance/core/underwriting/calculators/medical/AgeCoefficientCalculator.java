@@ -15,14 +15,20 @@ import java.time.ZoneId;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class AgeCoefficientCalculator {
-
-    @Value( "${age.coefficient.enabled:false}" )
-    private Boolean medicalRiskAgeCoefficientEnabled;
+    private final Boolean medicalRiskAgeCoefficientEnabled;
 
     private final DateTimeUtil dateTimeUtil;
     private final AgeCoefficientRepository ageCoefficientRepository;
+
+    AgeCoefficientCalculator(@Value( "${age.coefficient.enabled:true}" )
+                             Boolean medicalRiskAgeCoefficientEnabled,
+                             DateTimeUtil dateTimeUtil,
+                             AgeCoefficientRepository ageCoefficientRepository) {
+        this.medicalRiskAgeCoefficientEnabled = medicalRiskAgeCoefficientEnabled;
+        this.dateTimeUtil = dateTimeUtil;
+        this.ageCoefficientRepository = ageCoefficientRepository;
+    }
 
     BigDecimal calculate(TravelCalculatePremiumRequest request) {
         return medicalRiskAgeCoefficientEnabled

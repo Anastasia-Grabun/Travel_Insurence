@@ -3,6 +3,7 @@ plugins {
 	id 'idea'
 	id 'org.springframework.boot' version '3.2.5'
 	id 'io.spring.dependency-management' version '1.1.4'
+	id 'maven-publish'
 }
 
 group = 'com.example'
@@ -59,3 +60,47 @@ clean.doFirst {
 	delete "${projectDir}/build/"
 	println "${projectDir}/build/"
 }
+
+jar {
+	enabled = false
+}
+
+bootJar {
+	enabled = true
+	archiveBaseName = 'insurance-calculator'
+	archiveVersion = '1.0.1'
+	mainClass = 'org.example.travel.insurance.InsuranceApplication'
+}
+
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			// Identify the artifact
+			artifact bootJar  // This refers to the Spring Boot's bootJar task
+
+			// Project coordinates
+			groupId = 'com.example'
+			artifactId = 'insurance-calculator'
+			version = '1.0.0'
+
+			// Add other metadata as needed
+			pom {
+				name = 'Insurance Calculator Application'
+				description = 'Application to calculate travel insurance premium'
+				licenses {
+					license {
+						name = 'The Apache License, Version 2.0'
+						url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+					}
+				}
+			}
+		}
+	}
+
+	// Configure the repository location (local Maven repository)
+	repositories {
+		mavenLocal()
+	}
+}
+
