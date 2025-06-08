@@ -34,7 +34,6 @@ public class CountryValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getCountry()).thenReturn(null);
-        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
 
         assertTrue(countryValidation.validate(request).isEmpty());
         verifyNoInteractions(classifierValueRepository, errorFactory);
@@ -45,7 +44,6 @@ public class CountryValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getCountry()).thenReturn("Korea");
-        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
 
         when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Korea"))
                 .thenReturn(Optional.empty());
@@ -61,7 +59,6 @@ public class CountryValidationTest {
         TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
 
         when(request.getCountry()).thenReturn("Japan");
-        when(request.getSelectedRisks()).thenReturn(List.of("TRAVEL_MEDICAL"));
         when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Japan"))
                 .thenReturn(Optional.of(mock(ClassifierValue.class)));
 
