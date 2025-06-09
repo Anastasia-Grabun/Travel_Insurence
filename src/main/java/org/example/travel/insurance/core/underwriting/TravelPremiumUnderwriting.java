@@ -1,9 +1,9 @@
 package org.example.travel.insurance.core.underwriting;
 
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 
 public interface TravelPremiumUnderwriting {
 
-    TravelPremiumCalculationResult calculatePremium(TravelCalculatePremiumRequest request);
+    TravelPremiumCalculationResult calculatePremium(TravelCalculatePremiumRequestV1 request);
 
 }

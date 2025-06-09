@@ -1,7 +1,7 @@
 package org.example.travel.insurance.core.validations;
 
 import lombok.RequiredArgsConstructor;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 import java.util.Date;
@@ -13,7 +13,7 @@ class DateFromLessDateToValidation implements TravelRequestValidation {
 
     private final ValidationErrorFactory errorFactory;
 
-    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request){
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequestV1 request){
         Date dateFrom = request.getAgreementDateFrom();
         Date dateTo = request.getAgreementDateTo();
 

@@ -2,7 +2,7 @@ package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.core.domain.ClassifierValue;
 import org.example.travel.insurance.core.repositories.ClassifierValueRepository;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.test.util.ReflectionTestUtils;
-import java.util.List;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -33,7 +33,7 @@ class MedicalRiskLimitLevelValidationTest {
     @Test
     public void shouldNotReturnErrorWhenMedicalRiskLimitLevelNotEnabled() {
         ReflectionTestUtils.setField(validation, "medicalRiskLimitLevelEnabled", Boolean.FALSE);
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         Optional<ValidationError> validationErrorOpt = validation.validate(request);
         assertTrue(validationErrorOpt.isEmpty());
         verifyNoInteractions(classifierValueRepository, errorFactory);
@@ -42,7 +42,7 @@ class MedicalRiskLimitLevelValidationTest {
     @Test
     public void shouldNotReturnErrorWhenNotContainTravelMedicalRisk() {
         ReflectionTestUtils.setField(validation, "medicalRiskLimitLevelEnabled", Boolean.TRUE);
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         Optional<ValidationError> validationErrorOpt = validation.validate(request);
         assertTrue(validationErrorOpt.isEmpty());
         verifyNoInteractions(classifierValueRepository, errorFactory);
@@ -51,7 +51,7 @@ class MedicalRiskLimitLevelValidationTest {
     @Test
     public void shouldNotReturnErrorWhenMedicalRiskLimitLevelIsNull() {
         ReflectionTestUtils.setField(validation, "medicalRiskLimitLevelEnabled", Boolean.TRUE);
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getMedicalRiskLimitLevel()).thenReturn(null);
         Optional<ValidationError> validationErrorOpt = validation.validate(request);
         assertTrue(validationErrorOpt.isEmpty());
@@ -61,7 +61,7 @@ class MedicalRiskLimitLevelValidationTest {
     @Test
     public void shouldNotReturnErrorWhenMedicalRiskLimitLevelIsBlank() {
         ReflectionTestUtils.setField(validation, "medicalRiskLimitLevelEnabled", Boolean.TRUE);
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getMedicalRiskLimitLevel()).thenReturn("");
         Optional<ValidationError> validationErrorOpt = validation.validate(request);
         assertTrue(validationErrorOpt.isEmpty());
@@ -70,7 +70,7 @@ class MedicalRiskLimitLevelValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenMedicalRiskLimitLevelExistInDb() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getMedicalRiskLimitLevel()).thenReturn("LEVEL_10000");
         ClassifierValue classifierValue = mock(ClassifierValue.class);
         when(classifierValueRepository.findByClassifierTitleAndIc("MEDICAL_RISK_LIMIT_LEVEL", "LEVEL_10000"))
@@ -83,7 +83,7 @@ class MedicalRiskLimitLevelValidationTest {
     @Test
     public void shouldReturnError() {
         ReflectionTestUtils.setField(validation, "medicalRiskLimitLevelEnabled", Boolean.TRUE);
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         when(request.getMedicalRiskLimitLevel()).thenReturn("LEVEL_10000");
         when(classifierValueRepository.findByClassifierTitleAndIc("MEDICAL_RISK_LIMIT_LEVEL", "LEVEL_10000"))
                 .thenReturn(Optional.empty());

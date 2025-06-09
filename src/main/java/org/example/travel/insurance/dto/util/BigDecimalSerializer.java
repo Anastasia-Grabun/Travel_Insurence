@@ -1,4 +1,4 @@
-package org.example.travel.insurance.core.util;
+package org.example.travel.insurance.dto.util;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;

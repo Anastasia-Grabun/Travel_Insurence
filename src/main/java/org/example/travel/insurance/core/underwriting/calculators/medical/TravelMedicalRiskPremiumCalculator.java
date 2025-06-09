@@ -3,7 +3,7 @@ package org.example.travel.insurance.core.underwriting.calculators.medical;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.example.travel.insurance.core.underwriting.TravelRiskPremiumCalculator;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,7 +18,7 @@ public class TravelMedicalRiskPremiumCalculator implements TravelRiskPremiumCalc
     private final RiskLimitLevelCalculator riskLimitLevelCalculator;
 
     @Override
-    public BigDecimal calculatePremium(TravelCalculatePremiumRequest request) {
+    public BigDecimal calculatePremium(TravelCalculatePremiumRequestV1 request) {
         var daysCount = dayCountCalculator.calculate(request);
         var countryDefaultRate = countryDefaultDayRateCalculator.calculate(request);
         var ageCoefficient = ageCoefficientCalculator.calculate(request);

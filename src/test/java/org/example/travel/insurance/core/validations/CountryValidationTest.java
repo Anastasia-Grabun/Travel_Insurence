@@ -2,14 +2,14 @@ package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.core.domain.ClassifierValue;
 import org.example.travel.insurance.core.repositories.ClassifierValueRepository;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import java.util.List;
+
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -31,7 +31,7 @@ public class CountryValidationTest {
 
     @Test
     public void shouldNotValidateWhenCountryNull(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getCountry()).thenReturn(null);
 
@@ -41,7 +41,7 @@ public class CountryValidationTest {
 
     @Test
     public void shouldValidateWithErrors() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getCountry()).thenReturn("Korea");
 
@@ -56,7 +56,7 @@ public class CountryValidationTest {
 
     @Test
     public void shouldValidateWithoutErrors(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getCountry()).thenReturn("Japan");
         when(classifierValueRepository.findByClassifierTitleAndIc("COUNTRY", "Japan"))

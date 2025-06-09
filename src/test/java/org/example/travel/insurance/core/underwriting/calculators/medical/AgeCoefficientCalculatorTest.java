@@ -3,7 +3,7 @@ package org.example.travel.insurance.core.underwriting.calculators.medical;
 import org.example.travel.insurance.core.domain.AgeCoefficient;
 import org.example.travel.insurance.core.repositories.AgeCoefficientRepository;
 import org.example.travel.insurance.core.util.DateTimeUtil;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import java.math.BigDecimal;
@@ -21,14 +21,14 @@ class AgeCoefficientCalculatorTest {
     private DateTimeUtil dateTimeUtil;
     private AgeCoefficientRepository ageCoefficientRepository;
 
-    private TravelCalculatePremiumRequest request;
+    private TravelCalculatePremiumRequestV1 request;
 
     @BeforeEach
     void setUp() {
         dateTimeUtil = mock(DateTimeUtil.class);
         ageCoefficientRepository = mock(AgeCoefficientRepository.class);
 
-        request = new TravelCalculatePremiumRequest();
+        request = new TravelCalculatePremiumRequestV1();
         request.setPersonBirthDate(Date.from(LocalDate.of(1990, 1, 1)
                 .atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }

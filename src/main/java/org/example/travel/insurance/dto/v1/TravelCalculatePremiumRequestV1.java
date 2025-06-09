@@ -1,14 +1,11 @@
-package org.example.travel.insurance.dto;
+package org.example.travel.insurance.dto.v1;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.travel.insurance.core.util.BigDecimalSerializer;
-
-import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelCalculatePremiumResponse extends CoreResponse {
+public class TravelCalculatePremiumRequestV1 {
 
     private String personFirstName;
     private String personLastName;
@@ -34,13 +31,7 @@ public class TravelCalculatePremiumResponse extends CoreResponse {
 
     private String medicalRiskLimitLevel;
 
-    @JsonSerialize(using = BigDecimalSerializer.class)
-    private BigDecimal agreementPremium;
-
-    private List<RiskPremium> risks;
-
-    public TravelCalculatePremiumResponse(List<ValidationError> errors) {
-        super(errors);
-    }
+    @JsonProperty("selected_risks")
+    private List<String> selectedRisks;
 
 }

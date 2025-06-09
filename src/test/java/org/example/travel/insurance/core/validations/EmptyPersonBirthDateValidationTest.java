@@ -1,6 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ class EmptyPersonBirthDateValidationTest {
 
     @Test
     public void shouldReturnNoErrorWhenPersonBirthDateIsPresent() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getPersonBirthDate()).thenReturn(new Date());
 
@@ -35,7 +35,7 @@ class EmptyPersonBirthDateValidationTest {
 
     @Test
     public void shouldReturnErrorWhenPersonBirthDateIsNull() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getPersonBirthDate()).thenReturn(null);
         when(errorFactory.buildError("ERROR_CODE_11"))

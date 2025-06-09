@@ -3,7 +3,7 @@ package org.example.travel.insurance.core.validations;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 import java.util.Optional;
@@ -15,13 +15,13 @@ class EmptyCountryValidation implements TravelRequestValidation {
 
     private final ValidationErrorFactory errorFactory;
 
-    public Optional<ValidationError> validate(TravelCalculatePremiumRequest request) {
+    public Optional<ValidationError> validate(TravelCalculatePremiumRequestV1 request) {
         return (countryIsNullOrBlank(request))
                 ? Optional.of(errorFactory.buildError("ERROR_CODE_10"))
                 : Optional.empty();
     }
 
-    private boolean countryIsNullOrBlank(TravelCalculatePremiumRequest request) {
+    private boolean countryIsNullOrBlank(TravelCalculatePremiumRequestV1 request) {
         return request.getCountry() == null || request.getCountry().isBlank();
     }
 

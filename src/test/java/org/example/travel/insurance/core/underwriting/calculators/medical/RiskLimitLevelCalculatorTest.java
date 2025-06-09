@@ -2,7 +2,7 @@ package org.example.travel.insurance.core.underwriting.calculators.medical;
 
 import org.example.travel.insurance.core.domain.MedicalRiskLimitLevel;
 import org.example.travel.insurance.core.repositories.MedicalRiskLimitLevelRepository;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -29,11 +29,11 @@ class RiskLimitLevelCalculatorTest {
     @InjectMocks
     private RiskLimitLevelCalculator riskLimitLevelCalculator;
 
-    private TravelCalculatePremiumRequest request;
+    private TravelCalculatePremiumRequestV1 request;
 
     @BeforeEach
     public void setUp(){
-        request = new TravelCalculatePremiumRequest();
+        request = new TravelCalculatePremiumRequestV1();
     }
 
     @Test

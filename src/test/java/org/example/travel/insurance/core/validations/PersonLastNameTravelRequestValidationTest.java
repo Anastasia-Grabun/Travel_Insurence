@@ -1,6 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ public class PersonLastNameTravelRequestValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenPersonLastNameIs(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getPersonLastName()).thenReturn("Komatsu");
 
@@ -36,7 +36,7 @@ public class PersonLastNameTravelRequestValidationTest {
 
     @Test
     public void shouldReturnErrorWhenPersonLastNameIsNull(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getPersonLastName()).thenReturn(null);
         when(errorFactory.buildError("ERROR_CODE_2"))
@@ -51,7 +51,7 @@ public class PersonLastNameTravelRequestValidationTest {
 
     @Test
     public void shouldReturnErrorWhenPersonLastNameIsEmpty() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getPersonLastName()).thenReturn("");
         when(errorFactory.buildError("ERROR_CODE_2"))

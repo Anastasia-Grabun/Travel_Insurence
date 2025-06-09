@@ -4,8 +4,8 @@ import com.google.common.base.Stopwatch;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.example.travel.insurance.core.services.TravelCalculatePremiumService;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
-import org.example.travel.insurance.dto.TravelCalculatePremiumResponse;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumResponseV1;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,17 +24,17 @@ public class TravelCalculatePremiumController {
 	@PostMapping(path = "/",
 			consumes = "application/json",
 			produces = "application/json")
-	public TravelCalculatePremiumResponse calculatePremium(@RequestBody TravelCalculatePremiumRequest request) {
+	public TravelCalculatePremiumResponseV1 calculatePremium(@RequestBody TravelCalculatePremiumRequestV1 request) {
 		Stopwatch stopwatch = Stopwatch.createStarted();
-		TravelCalculatePremiumResponse response = processRequest(request);
+		TravelCalculatePremiumResponseV1 response = processRequest(request);
 		timeLogger.toExecuteTimeLogger(stopwatch);
 
 		return response;
 	}
 
-	private TravelCalculatePremiumResponse processRequest(TravelCalculatePremiumRequest request){
+	private TravelCalculatePremiumResponseV1 processRequest(TravelCalculatePremiumRequestV1 request){
 		loggerRequest.toLogJson(request);
-		TravelCalculatePremiumResponse response = calculatePremiumService.calculatePremium(request);
+		TravelCalculatePremiumResponseV1 response = calculatePremiumService.calculatePremium(request);
 		loggerResponse.toLogJson(response);
 
 		return response;

@@ -1,7 +1,7 @@
 package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.core.util.DateTimeUtil;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -31,7 +31,7 @@ public class AgreementDateToNotInPastTravelRequestValidationTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateToInPast(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getAgreementDateTo()).thenReturn(parseDate("20.12.2005"));
         when(dataTimeService.getCurrentDateTime()).thenReturn(parseDate("20.10.2025"));
@@ -47,7 +47,7 @@ public class AgreementDateToNotInPastTravelRequestValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenAgreementDateFromInFuture(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getAgreementDateTo()).thenReturn(parseDate("20.12.2025"));
         when(dataTimeService.getCurrentDateTime()).thenReturn(parseDate("20.10.2025"));

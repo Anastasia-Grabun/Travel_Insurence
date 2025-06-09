@@ -1,6 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -27,7 +27,7 @@ public class DateFromLessDateToTravelRequestValidationTest {
 
     @Test
     public void shouldNotReturnErrorWhenAgreementDateToAfterAgreementDateFrom(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getAgreementDateFrom()).thenReturn(convertToDate("2010-10-11"));
         when(request.getAgreementDateTo()).thenReturn(convertToDate("2011-12-20"));
@@ -39,7 +39,7 @@ public class DateFromLessDateToTravelRequestValidationTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateToBeforeAgreementDateFrom(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getAgreementDateTo()).thenReturn(new Date());
         when(request.getAgreementDateFrom()).thenReturn(new Date());
@@ -55,7 +55,7 @@ public class DateFromLessDateToTravelRequestValidationTest {
 
     @Test
     public void shouldReturnErrorWhenAgreementDateToEqualsAgreementDateFrom(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         when(request.getAgreementDateFrom()).thenReturn(convertToDate("2024-10-10"));
         when(request.getAgreementDateTo()).thenReturn(convertToDate("2024-10-10"));

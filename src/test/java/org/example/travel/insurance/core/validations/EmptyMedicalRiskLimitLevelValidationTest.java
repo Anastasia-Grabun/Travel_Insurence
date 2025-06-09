@@ -1,6 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,11 +29,11 @@ class EmptyMedicalRiskLimitLevelValidationTest {
     @InjectMocks
     private EmptyMedicalRiskLimitLevelValidation validation;
 
-    private TravelCalculatePremiumRequest request;
+    private TravelCalculatePremiumRequestV1 request;
 
     @BeforeEach
     void setUp() {
-        request = new TravelCalculatePremiumRequest();
+        request = new TravelCalculatePremiumRequestV1();
     }
 
     @Test

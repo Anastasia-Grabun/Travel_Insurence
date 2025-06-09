@@ -1,7 +1,7 @@
 package org.example.travel.insurance.core.underwriting;
 
 import org.example.travel.insurance.dto.RiskPremium;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -24,7 +24,7 @@ class TravelPremiumUnderwritingTest {
 
     @Test
     void shouldCalculateTotalPremiumAsSumOfRiskPremiums(){
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
         List<RiskPremium> riskPremiums = List.of(
                 new RiskPremium("TRAVEL_MEDICAL", BigDecimal.ONE),
                 new RiskPremium("TRAVEL_EVACUATION", BigDecimal.ONE)

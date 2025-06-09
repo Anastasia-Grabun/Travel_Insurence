@@ -1,7 +1,7 @@
 package org.example.travel.insurance.core.underwriting.calculators.medical;
 
 import org.example.travel.insurance.core.util.DateTimeUtil;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -24,11 +24,11 @@ class DayCountCalculatorTest {
     @InjectMocks
     private DayCountCalculator calculator;
 
-    private TravelCalculatePremiumRequest request;
+    private TravelCalculatePremiumRequestV1 request;
 
     @BeforeEach
     void setUp() {
-        request = new TravelCalculatePremiumRequest();
+        request = new TravelCalculatePremiumRequestV1();
         request.setAgreementDateFrom(Date.from(LocalDate.of(2023, 4, 1).atStartOfDay(ZoneId.systemDefault()).toInstant()));
         request.setAgreementDateTo(Date.from(LocalDate.of(2023, 4, 11).atStartOfDay(ZoneId.systemDefault()).toInstant()));
     }

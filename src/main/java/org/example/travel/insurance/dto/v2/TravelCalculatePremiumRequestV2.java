@@ -1,11 +1,12 @@
-package org.example.travel.insurance.dto;
+package org.example.travel.insurance.dto.v2;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -13,25 +14,24 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelCalculatePremiumRequest {
-
-    private String personFirstName;
-    private String personLastName;
+public class TravelCalculatePremiumRequestV2 {
 
     @JsonFormat(pattern="yyyy-MM-dd")
-    private Date personBirthDate;
-
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date agreementDateFrom;
 
     @JsonFormat(pattern="yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date agreementDateTo;
 
     private String country;
 
     private String medicalRiskLimitLevel;
 
-    @JsonProperty("selected_risks")
+    @JsonAlias("selected_risks")
     private List<String> selectedRisks;
+
+    @JsonAlias("persons")
+    private List<PersonRequestDTO> persons;
 
 }

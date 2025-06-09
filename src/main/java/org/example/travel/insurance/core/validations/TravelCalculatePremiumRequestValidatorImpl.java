@@ -3,7 +3,7 @@ package org.example.travel.insurance.core.validations;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 import java.util.Collection;
@@ -23,7 +23,7 @@ class TravelCalculatePremiumRequestValidatorImpl implements
     private final List<TravelRequestListValidation> listValidations;
 
     @Override
-    public List<ValidationError> validate(TravelCalculatePremiumRequest request) {
+    public List<ValidationError> validate(TravelCalculatePremiumRequestV1 request) {
         List<ValidationError> singleErrors = collectSingleErrors(request);
         log.info("Single errors collected: {}", singleErrors);
 
@@ -36,7 +36,7 @@ class TravelCalculatePremiumRequestValidatorImpl implements
         return allErrors;
     }
 
-    private List<ValidationError> collectSingleErrors(TravelCalculatePremiumRequest request) {
+    private List<ValidationError> collectSingleErrors(TravelCalculatePremiumRequestV1 request) {
         List<ValidationError> errors = singleValidations.stream()
                 .map(validation -> validation.validate(request))
                 .filter(Optional::isPresent)
@@ -48,7 +48,7 @@ class TravelCalculatePremiumRequestValidatorImpl implements
         return errors;
     }
 
-    private List<ValidationError> collectListErrors(TravelCalculatePremiumRequest request) {
+    private List<ValidationError> collectListErrors(TravelCalculatePremiumRequestV1 request) {
         List<ValidationError> errors = listValidations.stream()
                 .map(validation -> validation.validateList(request))
                 .filter(Objects::nonNull)

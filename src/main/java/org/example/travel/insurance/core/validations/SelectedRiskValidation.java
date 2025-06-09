@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.example.travel.insurance.core.repositories.ClassifierValueRepository;
 import org.example.travel.insurance.core.util.Placeholder;
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -20,7 +20,7 @@ class SelectedRiskValidation implements TravelRequestListValidation{
     private final ClassifierValueRepository classifierValueRepository;
 
     @Override
-    public List<ValidationError> validateList(TravelCalculatePremiumRequest request) {
+    public List<ValidationError> validateList(TravelCalculatePremiumRequestV1 request) {
         List<String> selected_risks = request.getSelectedRisks();
         return selected_risks == null ? List.of() : validateSelectedRisks(selected_risks);
     }

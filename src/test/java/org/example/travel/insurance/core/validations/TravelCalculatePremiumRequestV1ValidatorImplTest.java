@@ -1,6 +1,6 @@
 package org.example.travel.insurance.core.validations;
 
-import org.example.travel.insurance.dto.TravelCalculatePremiumRequest;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.junit.jupiter.api.Test;
 import java.util.List;
@@ -10,11 +10,11 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-public class TravelCalculatePremiumRequestValidatorImplTest {
+public class TravelCalculatePremiumRequestV1ValidatorImplTest {
 
     @Test
     public void shouldNotReturnErrors() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         TravelRequestValidation validation1 = mock(TravelRequestValidation.class);
         TravelRequestValidation validation2 = mock(TravelRequestValidation.class);
@@ -35,7 +35,7 @@ public class TravelCalculatePremiumRequestValidatorImplTest {
 
     @Test
     public void shouldReturnErrors() {
-        TravelCalculatePremiumRequest request = mock(TravelCalculatePremiumRequest.class);
+        TravelCalculatePremiumRequestV1 request = mock(TravelCalculatePremiumRequestV1.class);
 
         TravelRequestValidation validation1 = mock(TravelRequestValidation.class);
         TravelRequestValidation validation2 = mock(TravelRequestValidation.class);
