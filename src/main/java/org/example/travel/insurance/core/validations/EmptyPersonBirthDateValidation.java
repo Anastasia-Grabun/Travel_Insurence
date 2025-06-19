@@ -2,6 +2,8 @@ package org.example.travel.insurance.core.validations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.example.travel.insurance.core.validations.TravelRequestValidation;
+import org.example.travel.insurance.core.validations.ValidationErrorFactory;
 import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
 import org.springframework.stereotype.Component;
@@ -9,7 +11,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class EmptyPersonBirthDateValidation implements TravelRequestValidation{
+class EmptyPersonBirthDateValidation implements TravelRequestValidation {
 
     private final ValidationErrorFactory errorFactory;
 

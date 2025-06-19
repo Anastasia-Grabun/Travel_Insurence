@@ -1,8 +1,8 @@
 package org.example.travel.insurance.core.validations;
 
 import org.example.travel.insurance.core.util.DateTimeUtil;
-import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.example.travel.insurance.dto.ValidationError;
+import org.example.travel.insurance.dto.v1.TravelCalculatePremiumRequestV1;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
