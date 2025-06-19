@@ -39,13 +39,16 @@ public class DtoV1Converter {
     private TravelCalculatePremiumResponseV1 buildSuccessfulResponse(TravelCalculatePremiumCoreResult coreResult) {
         AgreementDTO agreement = coreResult.getAgreement();
         TravelCalculatePremiumResponseV1 response = new TravelCalculatePremiumResponseV1();
+        response.setUuid(agreement.getUuid());
         response.setPersonFirstName(agreement.getPersons().get(0).getPersonFirstName());
         response.setPersonLastName(agreement.getPersons().get(0).getPersonLastName());
+        response.setPersonCode(agreement.getPersons().get(0).getPersonCode());
         response.setPersonBirthDate(agreement.getPersons().get(0).getPersonBirthDate());
         response.setAgreementDateFrom(agreement.getAgreementDateFrom());
         response.setAgreementDateTo(agreement.getAgreementDateTo());
         response.setCountry(agreement.getCountry());
         response.setMedicalRiskLimitLevel(agreement.getPersons().get(0).getMedicalRiskLimitLevel());
+        response.setTravelCost(agreement.getPersons().get(0).getTravelCost());
         response.setAgreementPremium(agreement.getAgreementPremium());
 
         PersonDTO person = agreement.getPersons().get(0);
@@ -61,8 +64,11 @@ public class DtoV1Converter {
         PersonDTO person = new PersonDTO();
         person.setPersonFirstName(request.getPersonFirstName());
         person.setPersonLastName(request.getPersonLastName());
+        person.setPersonCode(request.getPersonCode());
         person.setPersonBirthDate(request.getPersonBirthDate());
         person.setMedicalRiskLimitLevel(request.getMedicalRiskLimitLevel());
+        person.setTravelCost(request.getTravelCost());
+
         return person;
     }
 
@@ -78,5 +84,6 @@ public class DtoV1Converter {
 
         return agreement;
     }
+
 
 }

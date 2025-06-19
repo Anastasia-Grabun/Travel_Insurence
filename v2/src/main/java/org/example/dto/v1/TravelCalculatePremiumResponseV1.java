@@ -24,9 +24,9 @@ import java.util.List;
 public class TravelCalculatePremiumResponseV1 extends CoreResponse {
 
     private String uuid;
-
     private String personFirstName;
     private String personLastName;
+    private String personCode;
 
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date personBirthDate;
@@ -40,6 +40,9 @@ public class TravelCalculatePremiumResponseV1 extends CoreResponse {
     private String country;
 
     private String medicalRiskLimitLevel;
+
+    @JsonSerialize(using = BigDecimalSerializer.class)
+    private BigDecimal travelCost;
 
     @JsonSerialize(using = BigDecimalSerializer.class)
     private BigDecimal agreementPremium;
