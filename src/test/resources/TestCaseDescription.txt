@@ -2,21 +2,22 @@ Test Case 1:
 Request: All fields filled, RISK_TYPE - TRAVEL_MEDICAL.
 Response: success, without errors.
 
+
 Test Case 2:
 Request: personFirstName is null, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_1.
+Response: error code = ERROR_CODE_7.
 
 Test Case 3:
 Request: personFirstName is empty, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_1.
+Response: error code = ERROR_CODE_7.
 
 Test Case 4:
 Request: personLastName is null, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_2.
+Response: error code = ERROR_CODE_8.
 
 Test Case 5:
 Request: personLastName is empty, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_2.
+Response: error code = ERROR_CODE_8.
 
 Test Case 6:
 Request: personBirthDate is null, RISK_TYPE - TRAVEL_MEDICAL.
@@ -28,7 +29,7 @@ Response: error code = ERROR_CODE_12.
 
 Test Case 8:
 Request: agreementDateFrom is null, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_3.
+Response: error code = ERROR_CODE_2.
 
 Test Case 9:
 Request: agreementDateTo is null, RISK_TYPE - TRAVEL_MEDICAL.
@@ -36,31 +37,31 @@ Response: error code = ERROR_CODE_4.
 
 Test Case 10:
 Request: agreementDateFrom is in the past, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_5.
+Response: error code = ERROR_CODE_1.
 
 Test Case 11:
 Request: agreementDateTo is in the past, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_6.
+Response: error code = ERROR_CODE_3.
 
 Test Case 12:
 Request: agreementDateTo is less than agreementDateFrom, RISK_TYPE - TRAVEL_MEDICAL.
-Response: error code = ERROR_CODE_7.
+Response: error code = ERROR_CODE_5.
 
 Test Case 13:
 Request: selectedRisks is null.
-Response: error code = ERROR_CODE_8.
+Response: error code = ERROR_CODE_6.
 
 Test Case 14:
 Request: selectedRisks is empty.
-Response: error code = ERROR_CODE_8.
+Response: error code = ERROR_CODE_6.
 
 Test Case 15:
 Request: selectedRisks is not supported (one risk).
-Response: error code = ERROR_CODE_9.
+Response: error code = ERROR_CODE_6.
 
 Test Case 16:
 Request: selectedRisks is not supported (two risks).
-Response: multiple error codes = ERROR_CODE_9.
+Response: multiple error codes = ERROR_CODE_6.
 
 Test Case 17:
 Request: country is empty, RISK_TYPE - TRAVEL_MEDICAL.
@@ -79,11 +80,9 @@ Request: all fields not provided.
 Response: multiple error codes.
 
 Test Case 21:
-Request: country is null, RISK_TYPE - TRAVEL_EVACUATION
+Request: country is null, RISK_TYPE - TRAVEL_EVACUATION.
 Response: error code = ERROR_CODE_10.
 
 Test Case 22:
-Request: country is empty, RISK_TYPE - TRAVEL_EVACUATION
+Request: country is empty, RISK_TYPE - TRAVEL_EVACUATION.
 Response: error code = ERROR_CODE_10.
-
-

@@ -1,3 +1,2 @@
 rootProject.name = 'Travel'
-include 'main', 'v2'
 
