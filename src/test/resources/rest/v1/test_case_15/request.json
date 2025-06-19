@@ -1,0 +1,10 @@
+{
+  "personFirstName" : "Nana",
+  "personLastName" : "Komatsu",
+  "personBirthDate" : "2000-05-29",
+  "agreementDateFrom" : "2025-08-20",
+  "agreementDateTo" : "2025-08-29",
+  "country" : "SPAIN",
+  "medicalRiskLimitLevel" : "LEVEL_10000",
+  "selected_risks": ["NOT_VALID_RISK_IC_1"]
+}
