@@ -22,9 +22,13 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -41,7 +45,7 @@ public class AgreementXmlExporterJob {
     private String agreementExportPath;
 
     @Value("${agreement.xml.exporter.job.thread.count}")
-    private Integer threadsCount;
+    private Integer threadCount;
 
     private final TravelGetAllAgreementUuidsService allAgreementUuidsService;
     private final TravelGetAgreementService agreementService;
@@ -56,7 +60,7 @@ public class AgreementXmlExporterJob {
     private void executeJob() {
         logger.info("AgreementXmlExporterJob started");
         List<String> allAgreementUuids = getAllAgreementUuids();
-        allAgreementUuids.forEach(this::exportAgreement);
+        exportAgreements(allAgreementUuids);
         logger.info("AgreementXmlExporterJob finished");
     }
 
@@ -67,20 +71,26 @@ public class AgreementXmlExporterJob {
         return result.getAgreementUuids();
     }
 
-    private void exportAgreements(List<String> agreementUuids){
-        ExecutorService executor = Executors.newFixedThreadPool(threadsCount);
-        for (String uuid : agreementUuids) {
-            executor.submit(() -> {
-                // Логика обработки одного агримента
-                // 1. Получить AgreementDTO из базы
-                // 2. Преобразовать в XML
-                // 3. Сохранить в файл
-            });
-        }
-
-        executor.shutdown();
-
+    private void exportAgreements(List<String> agreementUuids) {
+        ExecutorService executor = Executors.newFixedThreadPool(threadCount);
+        Collection<Future<?>> futures = new LinkedList<>();
+        agreementUuids.forEach(uuid -> futures.add(executor.submit(() -> exportAgreement(uuid))));
+        waitUntilAllTasksWillBeExecuted(futures);
+        executor.shutdownNow();
     }
+
+    private static void waitUntilAllTasksWillBeExecuted(Collection<Future<?>> futures) {
+        for (Future<?> future : futures) {
+            try {
+                future.get();
+            } catch (InterruptedException e) {
+                logger.info("AgreementXmlExporterJob exception", e);
+            } catch (ExecutionException e) {
+                logger.info("AgreementXmlExporterJob exception", e);
+            }
+        }
+    }
+
 
     private void exportAgreement(String agreementUuid) {
         try {
