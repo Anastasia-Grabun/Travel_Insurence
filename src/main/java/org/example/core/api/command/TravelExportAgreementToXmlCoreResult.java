@@ -11,18 +11,12 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TravelGetAllAgreementUuidsCoreResult {
+public class TravelExportAgreementToXmlCoreResult {
 
     private List<ValidationErrorDTO> errors;
 
-    private List<String> agreementUuids;
-
     public boolean hasErrors() {
         return errors != null && !errors.isEmpty();
-    }
-
-    public TravelGetAllAgreementUuidsCoreResult(List<ValidationErrorDTO> errors) {
-        this.errors = errors;
     }
 
 }
