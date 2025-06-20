@@ -2,7 +2,6 @@ Test Case 1:
 Request: All fields filled, RISK_TYPE - TRAVEL_MEDICAL.
 Response: success, without errors.
 
-
 Test Case 2:
 Request: personFirstName is null, RISK_TYPE - TRAVEL_MEDICAL.
 Response: error code = ERROR_CODE_7.
@@ -86,3 +85,11 @@ Response: error code = ERROR_CODE_10.
 Test Case 22:
 Request: country is empty, RISK_TYPE - TRAVEL_EVACUATION.
 Response: error code = ERROR_CODE_10.
+
+Test case 23:
+Request: person code is null, RISK_TYPE - TRAVEL_MEDICAL.
+Response: error code = ERROR_CODE_16.
+
+Test case 24:
+Request: person code is empty, RISK_TYPE - TRAVEL_MEDICAL.
+Response: error code = ERROR_CODE_16.

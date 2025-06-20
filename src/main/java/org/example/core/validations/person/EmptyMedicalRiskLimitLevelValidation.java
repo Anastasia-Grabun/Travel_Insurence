@@ -11,18 +11,24 @@ import org.springframework.stereotype.Component;
 import java.util.Optional;
 
 @Component
-@RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class EmptyMedicalRiskLimitLevelValidation extends TravelPersonFieldValidationImpl {
 
-    @Value( "${medical.risk.limit.level.enabled:false}" )
-    private Boolean medicalRiskLimitLevelEnabled;
+    private final Boolean medicalRiskLimitLevelEnabled;
 
     private final ValidationErrorFactory errorFactory;
 
+    EmptyMedicalRiskLimitLevelValidation(@Value("${medical.risk.limit.level.enabled:false}")
+                                         Boolean medicalRiskLimitLevelEnabled,
+                                         ValidationErrorFactory errorFactory) {
+        this.medicalRiskLimitLevelEnabled = medicalRiskLimitLevelEnabled;
+        this.errorFactory = errorFactory;
+    }
+
     @Override
-    public Optional<ValidationErrorDTO> validate(AgreementDTO agreementDTO, PersonDTO personDTO) {
+    public Optional<ValidationErrorDTO> validate(AgreementDTO agreement, PersonDTO person) {
         return (isMedicalRiskLimitLevelEnabled()
-                && isMedicalRiskLimitLevelIsNullOrBlank(personDTO))
+                && containsTravelMedical(agreement)
+                && isMedicalRiskLimitLevelIsNullOrBlank(person))
                 ? Optional.of(errorFactory.buildError("ERROR_CODE_13"))
                 : Optional.empty();
     }
@@ -31,9 +37,13 @@ class EmptyMedicalRiskLimitLevelValidation extends TravelPersonFieldValidationIm
         return medicalRiskLimitLevelEnabled;
     }
 
+    private boolean containsTravelMedical(AgreementDTO agreement) {
+        return agreement.getSelectedRisks() != null
+                && agreement.getSelectedRisks().contains("TRAVEL_MEDICAL");
+    }
 
-    private boolean isMedicalRiskLimitLevelIsNullOrBlank(PersonDTO personDTO) {
-        return personDTO.getMedicalRiskLimitLevel() == null || personDTO.getMedicalRiskLimitLevel().isBlank();
+    private boolean isMedicalRiskLimitLevelIsNullOrBlank(PersonDTO person) {
+        return person.getMedicalRiskLimitLevel() == null || person.getMedicalRiskLimitLevel().isBlank();
     }
 
 }

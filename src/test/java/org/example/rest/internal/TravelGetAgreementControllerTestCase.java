@@ -14,14 +14,16 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.org.webcompere.modelassert.json.JsonAssertions.assertJson;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
 public abstract class TravelGetAgreementControllerTestCase {
 
-    @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Autowired private JsonFileReader jsonFileReader;
+    @Autowired
+    private JsonFileReader jsonFileReader;
 
     private static final String BASE_URL = "/insurance/travel/api/internal/agreement/";
 

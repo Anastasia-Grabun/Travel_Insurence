@@ -8,10 +8,5 @@
       "errorCode": "ERROR_CODE_7",
       "description": "Field agreementDateTo must be after AgreementDateFrom!"
     }
-  ],
-  "agreementDateFrom": null,
-  "agreementDateTo": null,
-  "country": null,
-  "agreementPremium": null,
-  "persons": null
+  ]
 }
