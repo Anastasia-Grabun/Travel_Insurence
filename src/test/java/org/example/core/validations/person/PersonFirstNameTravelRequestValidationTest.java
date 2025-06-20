@@ -23,7 +23,7 @@ public class PersonFirstNameTravelRequestValidationTest {
     private ValidationErrorFactory errorFactory;
 
     @InjectMocks
-    private PersonFirstNameValidation validation;
+    private EmptyPersonFirstNameValidation validation;
 
     @Test
     public void shouldNotReturnErrorWhenPersonFirstNameIs(){

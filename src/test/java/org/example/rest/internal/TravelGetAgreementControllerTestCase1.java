@@ -16,9 +16,9 @@ import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
 public class TravelGetAgreementControllerTestCase1 extends TravelGetAgreementControllerTestCase {
 
     @Autowired private MockMvc mockMvc;

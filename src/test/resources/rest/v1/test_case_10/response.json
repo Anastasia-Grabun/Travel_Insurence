@@ -4,14 +4,5 @@
       "errorCode": "ERROR_CODE_5",
       "description": "Field agreementDateFrom must not be in the past!"
     }
-  ],
-  "personFirstName": null,
-  "personLastName": null,
-  "personBirthDate": null,
-  "agreementDateFrom": null,
-  "agreementDateTo": null,
-  "country": null,
-  "medicalRiskLimitLevel" : null,
-  "agreementPremium": null,
-  "risks": null
+  ]
 }

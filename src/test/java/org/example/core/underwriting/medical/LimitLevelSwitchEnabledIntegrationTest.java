@@ -4,7 +4,6 @@ import org.example.core.api.dto.AgreementDTO;
 import org.example.core.api.dto.PersonDTO;
 import org.example.core.underwriting.TravelPremiumCalculationResult;
 import org.example.core.underwriting.TravelPremiumUnderwriting;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +19,10 @@ import java.util.Date;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @SpringBootTest(properties = {"age.coefficient.enabled=true"})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 public class LimitLevelSwitchEnabledIntegrationTest {
 
@@ -50,7 +48,7 @@ public class LimitLevelSwitchEnabledIntegrationTest {
 
         TravelPremiumCalculationResult result = premiumUnderwriting.calculatePremium(agreement, person);
 
-        assertEquals(result.totalPremium(), new BigDecimal("495.00"));
+        assertEquals(0, result.totalPremium().compareTo(new BigDecimal("495.00")));
     }
 
     private Date createDate(String dateStr) {

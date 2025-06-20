@@ -20,25 +20,25 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureMockMvc
 @ExtendWith(SpringExtension.class)
 public class AgreementDateFromValidationIntegrationTest {
-    @Autowired private TravelAgreementValidator validator;
+
+    @Autowired
+    private TravelAgreementValidator validator;
 
     @Test
     public void shouldReturnErrorWhenDateFromIsNull() {
-        PersonDTO person = PersonDTO.builder()
-                .personFirstName("Vasja")
-                .personLastName("Pupkin")
-                .personBirthDate(createDate("01.01.2000"))
-                .medicalRiskLimitLevel("LEVEL_20000")
-                .build();
-
         AgreementDTO agreement = AgreementDTO.builder()
                 .agreementDateFrom(null)
-                .agreementDateTo(createDate("01.05.2030"))
+                .agreementDateTo(createDate("01.01.2030"))
                 .country("SPAIN")
                 .selectedRisks(List.of("TRAVEL_MEDICAL"))
-                .persons(List.of(person))
-                .build();
-
+                .persons(List.of(PersonDTO.builder()
+                        .personFirstName("Vasja")
+                        .personLastName("Pupkin")
+                        .personCode("123456-12345")
+                        .personBirthDate(createDate("01.01.2000"))
+                        .medicalRiskLimitLevel("LEVEL_10000")
+                        .build())
+                ).build();
         List<ValidationErrorDTO> errors = validator.validate(agreement);
 
         assertEquals(errors.size(), 1);
@@ -48,21 +48,19 @@ public class AgreementDateFromValidationIntegrationTest {
 
     @Test
     public void shouldReturnErrorWhenDateFromIsInThePast() {
-        PersonDTO person = PersonDTO.builder()
-                .personFirstName("Vasja")
-                .personLastName("Pupkin")
-                .personBirthDate(createDate("01.01.2000"))
-                .medicalRiskLimitLevel("LEVEL_20000")
-                .build();
-
         AgreementDTO agreement = AgreementDTO.builder()
                 .agreementDateFrom(createDate("01.01.2020"))
-                .agreementDateTo(createDate("01.05.2030"))
+                .agreementDateTo(createDate("01.01.2030"))
                 .country("SPAIN")
                 .selectedRisks(List.of("TRAVEL_MEDICAL"))
-                .persons(List.of(person))
-                .build();
-
+                .persons(List.of(PersonDTO.builder()
+                        .personFirstName("Vasja")
+                        .personLastName("Pupkin")
+                        .personCode("123456-12345")
+                        .personBirthDate(createDate("01.01.2000"))
+                        .medicalRiskLimitLevel("LEVEL_10000")
+                        .build())
+                ).build();
         List<ValidationErrorDTO> errors = validator.validate(agreement);
 
         assertEquals(errors.size(), 1);
