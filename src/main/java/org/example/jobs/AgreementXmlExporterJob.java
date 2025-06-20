@@ -3,8 +3,8 @@ package org.example.jobs;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.core.api.command.TravelGetAllAgreementUuidsCoreCommand;
-import org.example.core.api.command.TravelGetAllAgreementUuidsCoreResult;
+import org.example.core.api.command.TravelGetNotExportedAgreementUuidsCoreCommand;
+import org.example.core.api.command.TravelGetNotExportedAgreementUuidsCoreResult;
 import org.example.core.services.TravelGetAllAgreementUuidsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,8 +51,8 @@ public class AgreementXmlExporterJob {
     }
 
     private List<String> getAllAgreementUuids() {
-        TravelGetAllAgreementUuidsCoreResult result = allAgreementUuidsService.getAgreement(
-                new TravelGetAllAgreementUuidsCoreCommand()
+        TravelGetNotExportedAgreementUuidsCoreResult result = allAgreementUuidsService.getAgreement(
+                new TravelGetNotExportedAgreementUuidsCoreCommand()
         );
         return result.getAgreementUuids();
     }

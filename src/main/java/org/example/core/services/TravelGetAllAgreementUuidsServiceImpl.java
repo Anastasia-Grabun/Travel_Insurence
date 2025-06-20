@@ -1,10 +1,9 @@
 package org.example.core.services;
 
-
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.core.api.command.TravelGetAllAgreementUuidsCoreCommand;
-import org.example.core.api.command.TravelGetAllAgreementUuidsCoreResult;
+import org.example.core.api.command.TravelGetNotExportedAgreementUuidsCoreCommand;
+import org.example.core.api.command.TravelGetNotExportedAgreementUuidsCoreResult;
 import org.example.core.repositories.entities.AgreementEntityRepository;
 import org.springframework.stereotype.Component;
 import java.util.List;
@@ -17,9 +16,9 @@ class TravelGetAllAgreementUuidsServiceImpl
     private final AgreementEntityRepository agreementEntityRepository;
 
     @Override
-    public TravelGetAllAgreementUuidsCoreResult getAgreement(TravelGetAllAgreementUuidsCoreCommand command) {
-        List<String> agreementUuids = agreementEntityRepository.getAllAgreementUuids();
-        return new TravelGetAllAgreementUuidsCoreResult(null, agreementUuids);
+    public TravelGetNotExportedAgreementUuidsCoreResult getAgreement(TravelGetNotExportedAgreementUuidsCoreCommand command) {
+        List<String> agreementUuids = agreementEntityRepository.getNotExportedAgreementUuids();
+        return new TravelGetNotExportedAgreementUuidsCoreResult(null, agreementUuids);
     }
 
 }

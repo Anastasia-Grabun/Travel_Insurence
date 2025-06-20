@@ -1,10 +1,10 @@
 package org.example.core.services;
 
-import org.example.core.api.command.TravelGetAllAgreementUuidsCoreCommand;
-import org.example.core.api.command.TravelGetAllAgreementUuidsCoreResult;
+import org.example.core.api.command.TravelGetNotExportedAgreementUuidsCoreCommand;
+import org.example.core.api.command.TravelGetNotExportedAgreementUuidsCoreResult;
 
 public interface TravelGetAllAgreementUuidsService {
 
-    TravelGetAllAgreementUuidsCoreResult getAgreement(TravelGetAllAgreementUuidsCoreCommand command);
+    TravelGetNotExportedAgreementUuidsCoreResult getAgreement(TravelGetNotExportedAgreementUuidsCoreCommand command);
 
 }
