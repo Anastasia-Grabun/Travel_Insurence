@@ -10,7 +10,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-class PersonLastNameValidation extends TravelPersonFieldValidationImpl {
+class EmptyPersonLastNameValidation extends TravelPersonFieldValidationImpl {
 
     private final ValidationErrorFactory errorFactory;
 
