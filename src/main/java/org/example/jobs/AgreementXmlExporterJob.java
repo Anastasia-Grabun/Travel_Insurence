@@ -2,26 +2,15 @@ package org.example.jobs;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
-import org.example.core.api.command.TravelGetAgreementCoreCommand;
+import lombok.extern.slf4j.Slf4j;
 import org.example.core.api.command.TravelGetAllAgreementUuidsCoreCommand;
 import org.example.core.api.command.TravelGetAllAgreementUuidsCoreResult;
-import org.example.core.api.dto.AgreementDTO;
-import org.example.core.services.TravelGetAgreementService;
 import org.example.core.services.TravelGetAllAgreementUuidsService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,14 +30,11 @@ public class AgreementXmlExporterJob {
     @Value( "${agreement.xml.exporter.job.enabled:false}" )
     private boolean jobEnabled;
 
-    @Value( "${agreement.xml.exporter.job.path}" )
-    private String agreementExportPath;
-
     @Value("${agreement.xml.exporter.job.thread.count}")
     private Integer threadCount;
 
     private final TravelGetAllAgreementUuidsService allAgreementUuidsService;
-    private final TravelGetAgreementService agreementService;
+    private final AgreementXmlExporter agreementXmlExporter;
 
     @Scheduled(fixedRate = 5, timeUnit = TimeUnit.SECONDS)
     public void doJob() {
@@ -74,7 +60,7 @@ public class AgreementXmlExporterJob {
     private void exportAgreements(List<String> agreementUuids) {
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         Collection<Future<?>> futures = new LinkedList<>();
-        agreementUuids.forEach(uuid -> futures.add(executor.submit(() -> exportAgreement(uuid))));
+        agreementUuids.forEach(uuid -> futures.add(executor.submit(() -> agreementXmlExporter.exportAgreement(uuid))));
         waitUntilAllTasksWillBeExecuted(futures);
         executor.shutdownNow();
     }
@@ -89,49 +75,6 @@ public class AgreementXmlExporterJob {
                 logger.info("AgreementXmlExporterJob exception", e);
             }
         }
-    }
-
-
-    private void exportAgreement(String agreementUuid) {
-        try {
-            logger.info("AgreementXmlExporterJob started for uuid = " + agreementUuid);
-            AgreementDTO agreement = getAgreementData(agreementUuid);
-            String agreementXml = convertAgreementToXml(agreement);
-            storeXmlToFile(agreementUuid, agreementXml);
-            logger.info("AgreementXmlExporterJob finished for uuid = " + agreementUuid);
-        } catch (Exception e) {
-            logger.info("AgreementXmlExporterJob failed for agreement uuid = " + agreementUuid, e);
-        }
-    }
-
-    private AgreementDTO getAgreementData(String agreementUuid) {
-        TravelGetAgreementCoreCommand command = new TravelGetAgreementCoreCommand(agreementUuid);
-        return agreementService.getAgreement(command).getAgreement();
-    }
-
-    private String convertAgreementToXml(AgreementDTO agreement) throws JAXBException {
-        JAXBContext jaxbContext = JAXBContext.newInstance(AgreementDTO.class);
-        Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
-
-        jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-
-        StringWriter sw = new StringWriter();
-        jaxbMarshaller.marshal(agreement, sw);
-        return sw.toString();
-    }
-
-    private void storeXmlToFile(String agreementUuid,
-                                String agreementXml) throws IOException {
-        File file = new File(agreementExportPath + "/agreement-" + agreementUuid + ".xml");
-
-        if (!file.exists()) {
-            file.createNewFile();
-        }
-
-        FileWriter fw = new FileWriter(file.getAbsoluteFile());
-        BufferedWriter bw = new BufferedWriter(fw);
-        bw.write(agreementXml);
-        bw.close();
     }
 
 }
