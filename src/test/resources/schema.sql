@@ -1,28 +1,22 @@
 CREATE TABLE IF NOT EXISTS classifiers (
     id BIGSERIAL PRIMARY KEY,
-    title VARCHAR(200) NOT NULL,
+    title VARCHAR(200) NOT NULL UNIQUE,
     description VARCHAR(100) NOT NULL
 );
-
-CREATE UNIQUE INDEX ix_classifiers_title ON classifiers(title);
 
 CREATE TABLE IF NOT EXISTS classifier_values (
     id BIGSERIAL PRIMARY KEY,
     classifier_id BIGINT NOT NULL,
-    ic VARCHAR(200) NOT NULL,
+    ic VARCHAR(200) NOT NULL UNIQUE,
     description VARCHAR(500) NOT NULL,
     FOREIGN KEY (classifier_id) REFERENCES classifiers(id)
 );
 
-CREATE UNIQUE INDEX ix_classifier_values_ic ON classifier_values(ic);
-
 CREATE TABLE IF NOT EXISTS country_default_day_rate (
     id BIGSERIAL PRIMARY KEY,
-    country_ic VARCHAR(200) NOT NULL,
+    country_ic VARCHAR(200) NOT NULL UNIQUE,
     default_day_rate NUMERIC(10,2) NOT NULL
 );
-
-CREATE UNIQUE INDEX ix_country_default_day_rate_country_ic ON country_default_day_rate (country_ic);
 
 CREATE TABLE IF NOT EXISTS age_coefficient (
     id BIGSERIAL PRIMARY KEY,

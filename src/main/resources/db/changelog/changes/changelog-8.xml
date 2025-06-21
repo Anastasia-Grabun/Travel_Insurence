@@ -5,18 +5,21 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
 
-    <changeSet author = "Anastasia" id = "5">
-        <createTable tableName="age_coefficient">
+    <changeSet author = "Anastasia" id = "18">
+        <createTable tableName="agreements">
             <column autoIncrement="true" name="id" type="BIGSERIAL">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="age_from" type="INT">
+            <column name="date_from" type="DATETIME">
                 <constraints nullable="false"/>
             </column>
-            <column name="age_to" type="INT">
+            <column name="date_to" type="TIMESTAMP">
                 <constraints nullable="false"/>
             </column>
-            <column name="coefficient" type="DECIMAL(10,2)">
+            <column name="country" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="premium" type="DECIMAL(10,2)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
