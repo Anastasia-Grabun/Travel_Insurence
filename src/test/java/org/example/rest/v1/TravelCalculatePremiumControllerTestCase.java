@@ -27,16 +27,26 @@ public abstract class TravelCalculatePremiumControllerTestCase {
 
     protected abstract String getTestCaseFolderName();
 
-    protected void executeAndCompare() throws Exception {
+    protected void executeAndCompare(String testCaseFolderName) throws Exception {
         executeAndCompare(
-                "rest/v1/" + getTestCaseFolderName() + "/request.json",
-                "rest/v1/" + getTestCaseFolderName() + "/response.json"
+                "rest/v1/" + testCaseFolderName + "/request.json",
+                "rest/v1/" + testCaseFolderName + "/response.json",
+                false
         );
     }
 
+    protected void executeAndCompare(String testCaseFolderName,
+                                     boolean ignoreUUIDValue) throws Exception {
+        executeAndCompare(
+                "rest/v1/" + testCaseFolderName + "/request.json",
+                "rest/v1/" + testCaseFolderName + "/response.json",
+                ignoreUUIDValue
+        );
+    }
 
     protected void executeAndCompare(String jsonRequestFilePath,
-                                     String jsonResponseFilePath) throws Exception {
+                                     String jsonResponseFilePath,
+                                     boolean ignoreUUIDValue) throws Exception {
         String jsonRequest = jsonFileReader.readJsonFromFile(jsonRequestFilePath);
 
         MvcResult result = mockMvc.perform(post(BASE_URL)
@@ -49,11 +59,20 @@ public abstract class TravelCalculatePremiumControllerTestCase {
 
         String jsonResponse = jsonFileReader.readJsonFromFile(jsonResponseFilePath);
 
-        assertJson(responseBodyContent)
-                .where()
-                .keysInAnyOrder()
-                .arrayInAnyOrder()
-                .isEqualTo(jsonResponse);
+        if (ignoreUUIDValue) {
+            assertJson(responseBodyContent)
+                    .where()
+                    .keysInAnyOrder()
+                    .arrayInAnyOrder()
+                    .at("/uuid").isNotEmpty()
+                    .isEqualTo(jsonResponse);
+        } else {
+            assertJson(responseBodyContent)
+                    .where()
+                    .keysInAnyOrder()
+                    .arrayInAnyOrder()
+                    .isEqualTo(jsonResponse);
+        }
     }
 
 }

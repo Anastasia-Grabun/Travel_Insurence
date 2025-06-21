@@ -14,30 +14,41 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static uk.org.webcompere.modelassert.json.JsonAssertions.assertJson;
 
-@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ExtendWith(SpringExtension.class)
 public abstract class TravelCalculatePremiumControllerV2TestCase {
 
-    @Autowired private MockMvc mockMvc;
+    @Autowired
+    private MockMvc mockMvc;
 
-    @Autowired private JsonFileReader jsonFileReader;
+    @Autowired
+    private JsonFileReader jsonFileReader;
 
     private static final String BASE_URL = "/insurance/travel/api/v2/";
 
-
     protected abstract String getTestCaseFolderName();
 
-    protected void executeAndCompare() throws Exception {
+    protected void executeAndCompare(String testCaseFolderName) throws Exception {
         executeAndCompare(
-                "rest/v2/" + getTestCaseFolderName() + "/request.json",
-                "rest/v2/" + getTestCaseFolderName() + "/response.json"
+                "rest/v2/" + testCaseFolderName + "/request.json",
+                "rest/v2/" + testCaseFolderName + "/response.json",
+                false
         );
     }
 
+    protected void executeAndCompare(String testCaseFolderName,
+                                     boolean ignoreUUIDValue) throws Exception {
+        executeAndCompare(
+                "rest/v2/" + testCaseFolderName + "/request.json",
+                "rest/v2/" + testCaseFolderName + "/response.json",
+                ignoreUUIDValue
+        );
+    }
 
-        protected void executeAndCompare(String jsonRequestFilePath,
-                                     String jsonResponseFilePath) throws Exception {
+    protected void executeAndCompare(String jsonRequestFilePath,
+                                     String jsonResponseFilePath,
+                                     boolean ignoreUUIDValue) throws Exception {
         String jsonRequest = jsonFileReader.readJsonFromFile(jsonRequestFilePath);
 
         MvcResult result = mockMvc.perform(post(BASE_URL)
@@ -50,11 +61,20 @@ public abstract class TravelCalculatePremiumControllerV2TestCase {
 
         String jsonResponse = jsonFileReader.readJsonFromFile(jsonResponseFilePath);
 
-        assertJson(responseBodyContent)
-                .where()
-                .keysInAnyOrder()
-                .arrayInAnyOrder()
-                .isEqualTo(jsonResponse);
+        if (ignoreUUIDValue) {
+            assertJson(responseBodyContent)
+                    .where()
+                    .keysInAnyOrder()
+                    .arrayInAnyOrder()
+                    .at("/uuid").isNotEmpty()
+                    .isEqualTo(jsonResponse);
+        } else {
+            assertJson(responseBodyContent)
+                    .where()
+                    .keysInAnyOrder()
+                    .arrayInAnyOrder()
+                    .isEqualTo(jsonResponse);
+        }
     }
 
 }
