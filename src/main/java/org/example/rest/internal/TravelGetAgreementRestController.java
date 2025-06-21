@@ -40,6 +40,7 @@ public class TravelGetAgreementRestController {
 		Stopwatch stopwatch = Stopwatch.createStarted();
 		TravelGetAgreementResponse response = processRequest(uuid);
 		executionTimeLogger.toExecuteTimeLogger(stopwatch);
+
 		return response;
 	}
 
@@ -49,6 +50,7 @@ public class TravelGetAgreementRestController {
 		TravelGetAgreementCoreResult coreResult = getAgreementService.getAgreement(coreCommand);
 		TravelGetAgreementResponse response = dtoConverter.buildResponse(coreResult);
 		responseLogger.log(response);
+
 		return response;
 	}
 

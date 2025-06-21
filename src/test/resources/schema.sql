@@ -68,6 +68,7 @@ CREATE TABLE IF NOT EXISTS agreement_persons (
     agreement_id BIGINT NOT NULL,
     person_id BIGINT NOT NULL,
     medical_risk_limit_level VARCHAR(100),
+    travel_cost DECIMAL(10,2),
     FOREIGN KEY (agreement_id) REFERENCES agreements(id),
     FOREIGN KEY (person_id) REFERENCES persons(id)
 );

@@ -19,6 +19,7 @@ import static uk.org.webcompere.modelassert.json.JsonAssertions.assertJson;
 @ExtendWith(SpringExtension.class)
 public abstract class TravelGetAgreementControllerTestCase {
 
+
     @Autowired
     private MockMvc mockMvc;
 
@@ -75,3 +76,4 @@ public abstract class TravelGetAgreementControllerTestCase {
     }
 
 }
+

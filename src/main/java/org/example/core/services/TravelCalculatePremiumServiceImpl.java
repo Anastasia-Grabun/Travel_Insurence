@@ -6,6 +6,7 @@ import org.example.core.api.command.TravelCalculatePremiumCoreCommand;
 import org.example.core.api.command.TravelCalculatePremiumCoreResult;
 import org.example.core.api.dto.AgreementDTO;
 import org.example.core.api.dto.ValidationErrorDTO;
+import org.example.core.domain.entities.AgreementEntity;
 import org.example.core.validations.TravelAgreementValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +27,8 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
         List<ValidationErrorDTO> errors = agreementValidator.validate(command.getAgreement());
         if (errors.isEmpty()) {
             calculatePremium(command.getAgreement());
-            agreementEntityFactory.createAgreementEntity(command.getAgreement());
+            AgreementEntity agreement = agreementEntityFactory.createAgreementEntity(command.getAgreement());
+            command.getAgreement().setUuid(agreement.getUuid());
             return buildResponse(command.getAgreement());
         } else {
             return buildResponse(errors);

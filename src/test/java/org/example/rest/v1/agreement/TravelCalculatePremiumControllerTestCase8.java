@@ -7,7 +7,7 @@ public class TravelCalculatePremiumControllerTestCase8 extends TravelCalculatePr
 
     @Test
     public void execute() throws Exception {
-        executeAndCompare();
+        executeAndCompare(getTestCaseFolderName());
     }
 
     @Override
