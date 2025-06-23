@@ -1,0 +1,24 @@
+version: "3.9"
+
+networks:
+  insurence:
+
+services:
+  db:
+    networks: [insurence]
+    container_name: postgresql-container
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: 1984
+      POSTGRES_DB: insurance-calculator-db
+    ports:
+      - "5433:5432"
+
+  insurance-calculator-app:
+    networks: [insurence]
+    container_name: insurance-calc-container
+    build: .
+    ports:
+      - "8081:8080"
+    depends_on:
+      - db
