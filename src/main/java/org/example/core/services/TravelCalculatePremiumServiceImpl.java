@@ -7,6 +7,7 @@ import org.example.core.api.command.TravelCalculatePremiumCoreResult;
 import org.example.core.api.dto.AgreementDTO;
 import org.example.core.api.dto.ValidationErrorDTO;
 import org.example.core.domain.entities.AgreementEntity;
+import org.example.core.messagebroker.ProposalGeneratorQueueSender;
 import org.example.core.validations.TravelAgreementValidator;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,6 +22,7 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
     private final AgreementPersonsPremiumCalculator agreementPersonsPremiumCalculator;
     private final AgreementTotalPremiumCalculator agreementTotalPremiumCalculator;
     private final AgreementEntityFactory agreementEntityFactory;
+    private final ProposalGeneratorQueueSender proposalGeneratorQueueSender;
 
     @Override
     public TravelCalculatePremiumCoreResult calculatePremium(TravelCalculatePremiumCoreCommand command) {
@@ -29,6 +31,7 @@ class TravelCalculatePremiumServiceImpl implements TravelCalculatePremiumService
             calculatePremium(command.getAgreement());
             AgreementEntity agreement = agreementEntityFactory.createAgreementEntity(command.getAgreement());
             command.getAgreement().setUuid(agreement.getUuid());
+            proposalGeneratorQueueSender.send(command.getAgreement());
             return buildResponse(command.getAgreement());
         } else {
             return buildResponse(errors);
